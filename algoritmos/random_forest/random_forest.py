@@ -38,7 +38,6 @@ def avaliar(nome, modelo, x_tr=x_treino, y_tr=y_treino):
     dados_treino[nome] = (x_tr, y_tr)
     return modelo, y_pred
 
-# Com oversampling (treino_bal)
 avaliar('rf_1',
         RandomForestClassifier(n_estimators=50,
                                class_weight='balanced',
