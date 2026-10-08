@@ -1,44 +1,23 @@
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, recall_score, confusion_matrix, f1_score, ConfusionMatrixDisplay, classification_report
-from sklearn.utils import resample
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, ConfusionMatrixDisplay, classification_report
 import matplotlib.pyplot as plt
 
-treino = pd.read_csv('treino.csv')
-teste = pd.read_csv('teste.csv')
-validacao = pd.read_csv('validacao.csv')
+treino = pd.read_csv('../../dataset/treino.csv')
+teste = pd.read_csv('../../dataset/teste.csv')
+validacao = pd.read_csv('../../dataset/validacao.csv')
 
 treino = treino.replace({'b': 0, 'o': -1, 'x': 1})
 teste = teste.replace({'b': 0, 'o': -1, 'x': 1})
 validacao = validacao.replace({'b': 0, 'o': -1, 'x': 1})
 
-print("Antes:\n", treino['classe'].value_counts())
-
-empate = treino[treino['classe'] == 'Empate']
-outras = treino[treino['classe'] != 'Empate']
-
-alvo = treino['classe'].value_counts().max()
-
-empate_up = resample(empate,
-                     replace=True,
-                     n_samples=alvo,
-                     random_state=42)
-
-treino_bal = pd.concat([outras, empate_up]).sample(frac=1, random_state=42)
-
-print("Depois:\n", treino_bal['classe'].value_counts())
-
-x_treino = treino_bal.drop(columns=['classe'])
-y_treino = treino_bal['classe']
+x_treino = treino.drop(columns=['classe'])
+y_treino = treino['classe']
 x_teste = teste.drop(columns=['classe'])
 y_teste = teste['classe']
 x_validacao = validacao.drop(columns=['classe'])
 y_validacao = validacao['classe']
-
-# Treino original (sem oversampling), usado no teste com class_weight='balanced'
-x_treino_orig = treino.drop(columns=['classe'])
-y_treino_orig = treino['classe']
 
 resultados = {}
 modelos = {}
@@ -62,37 +41,34 @@ def avaliar(nome, modelo, x_tr=x_treino, y_tr=y_treino):
 # Com oversampling (treino_bal)
 avaliar('rf_1',
         RandomForestClassifier(n_estimators=50,
+                               class_weight='balanced',
                                random_state=42)
         )
 
 avaliar('rf_2',
         RandomForestClassifier(n_estimators=100,
+                               class_weight='balanced',
                                random_state=42)
         )
 
 avaliar('rf_3',
         RandomForestClassifier(n_estimators=200,
+                               class_weight='balanced',
                                random_state=42)
         )
 
 avaliar('rf_4',
         RandomForestClassifier(n_estimators=100,
                                max_depth=5,
+                               class_weight='balanced',
                                random_state=42)
         )
 
 avaliar('rf_5',
         RandomForestClassifier(n_estimators=100,
                                max_depth=10,
-                               random_state=42)
-        )
-
-# Sem oversampling: o class_weight='balanced' dá mais peso ao Empate sem duplicar dados
-avaliar('rf_2_balanced',
-        RandomForestClassifier(n_estimators=100,
                                class_weight='balanced',
-                               random_state=42),
-        x_treino_orig, y_treino_orig
+                               random_state=42)
         )
 
 
@@ -198,3 +174,19 @@ print(pd.Series(resultado_teste).round(4))
 print('-----')
 
 graficos(melhor, y_teste, y_pred_teste, 'teste')
+
+# Comparação das 4 métricas na validação para cada modelo
+metricas = ['acuracia', 'precisao', 'recall', 'f1']
+x = np.arange(len(df))
+largura = 0.2
+
+plt.figure(figsize=(10, 5))
+for i, metrica in enumerate(metricas):
+    plt.bar(x + (i - 1.5) * largura, df[metrica], width=largura, label=metrica)
+plt.xticks(x, df.index)
+plt.ylabel("Valor")
+plt.ylim(0, 1.05)
+plt.title("Comparação das métricas na validação")
+plt.legend()
+plt.grid(True, axis="y", linestyle="--", alpha=0.6)
+plt.show()
