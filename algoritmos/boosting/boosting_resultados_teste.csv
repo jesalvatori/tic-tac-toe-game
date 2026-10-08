@@ -1,0 +1,2 @@
+abordagem,n_estimators,learning_rate,max_depth,pesos,acuracia,precision,recall,f1,tempo_treino_ms,tempo_pred_ms
+2,200,0.3,1,,0.956989247311828,0.9705882352941176,0.9666666666666667,0.9665178571428572,149.38812499167398,0.7125830161385238
