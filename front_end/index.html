@@ -1,137 +1,287 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Jogo da Velha | Inteligência Artificial</title>
+
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
+
 <body>
+
     <main class="container">
 
+        <!-- CABEÇALHO -->
         <header class="cabecalho">
-            <span class="etiqueta">INTELIGÊNCIA ARTIFICIAL</span>
+
+            <span class="etiqueta">
+                INTELIGÊNCIA ARTIFICIAL
+            </span>
+
             <h1>Jogo da Velha</h1>
-            <p>Jogue contra o computador e acompanhe a classificação do tabuleiro.</p>
+
+            <p>
+                Jogue contra o computador e acompanhe
+                a classificação do tabuleiro.
+            </p>
+
         </header>
 
+
+        <!-- SELEÇÃO DO ALGORITMO -->
         <section class="selecao">
-            <label for="algoritmo">Algoritmo de classificação</label>
+
+            <label for="algoritmo">
+                Algoritmo de classificação
+            </label>
 
             <select id="algoritmo">
-                <option value="knn">KNN</option>
-                <option value="mlp">MLP</option>
-                <option value="arvore">Árvore de Decisão</option>
-                <option value="random_forest">Random Forest</option>
-                <option value="boosting">Boosting</option>
+
+                <option value="knn">
+                    KNN
+                </option>
+
+                <option value="mlp">
+                    MLP
+                </option>
+
+                <option value="arvore">
+                    Árvore de Decisão
+                </option>
+
+                <option value="random_forest">
+                    Random Forest
+                </option>
+
+                <option value="boosting">
+                    Gradient Boosting
+                </option>
+
             </select>
 
             <p id="status-modelo" class="status-modelo">
-                KNN — aguardando integração com Python
+                Aguardando conexão com o modelo...
             </p>
+
         </section>
 
+
+        <!-- ÁREA DO JOGO -->
         <section class="jogo">
 
+            <!-- JOGADORES -->
             <div class="jogadores">
+
                 <div class="jogador">
+
                     <span class="simbolo x">X</span>
+
                     <div>
                         <strong>Você</strong>
                         <small>Jogador X</small>
                     </div>
+
                 </div>
 
                 <span class="versus">VS</span>
 
                 <div class="jogador">
+
                     <span class="simbolo o">O</span>
+
                     <div>
                         <strong>Computador</strong>
                         <small>Jogadas aleatórias</small>
                     </div>
+
                 </div>
+
             </div>
 
+
+            <!-- MENSAGEM DA PARTIDA -->
             <p id="mensagem" aria-live="polite">
                 Sua vez! Escolha uma casa.
             </p>
 
+
+            <!-- TABULEIRO -->
             <div class="tabuleiro" id="tabuleiro">
-                <button class="casa" data-posicao="0" aria-label="Casa 1"></button>
-                <button class="casa" data-posicao="1" aria-label="Casa 2"></button>
-                <button class="casa" data-posicao="2" aria-label="Casa 3"></button>
-                <button class="casa" data-posicao="3" aria-label="Casa 4"></button>
-                <button class="casa" data-posicao="4" aria-label="Casa 5"></button>
-                <button class="casa" data-posicao="5" aria-label="Casa 6"></button>
-                <button class="casa" data-posicao="6" aria-label="Casa 7"></button>
-                <button class="casa" data-posicao="7" aria-label="Casa 8"></button>
-                <button class="casa" data-posicao="8" aria-label="Casa 9"></button>
+
+                <button
+                    class="casa"
+                    data-posicao="0"
+                    aria-label="Casa 1">
+                </button>
+
+                <button
+                    class="casa"
+                    data-posicao="1"
+                    aria-label="Casa 2">
+                </button>
+
+                <button
+                    class="casa"
+                    data-posicao="2"
+                    aria-label="Casa 3">
+                </button>
+
+                <button
+                    class="casa"
+                    data-posicao="3"
+                    aria-label="Casa 4">
+                </button>
+
+                <button
+                    class="casa"
+                    data-posicao="4"
+                    aria-label="Casa 5">
+                </button>
+
+                <button
+                    class="casa"
+                    data-posicao="5"
+                    aria-label="Casa 6">
+                </button>
+
+                <button
+                    class="casa"
+                    data-posicao="6"
+                    aria-label="Casa 7">
+                </button>
+
+                <button
+                    class="casa"
+                    data-posicao="7"
+                    aria-label="Casa 8">
+                </button>
+
+                <button
+                    class="casa"
+                    data-posicao="8"
+                    aria-label="Casa 9">
+                </button>
+
             </div>
 
         </section>
 
+
+        <!-- CLASSIFICAÇÃO DO TABULEIRO -->
         <section class="classificacao">
+
             <h2>Classificação do tabuleiro</h2>
 
             <div class="linha-resultado">
+
                 <span>Estado real</span>
-                <strong id="estado">Tem jogo</strong>
+
+                <strong id="estado">
+                    Tem jogo
+                </strong>
+
             </div>
 
             <div class="linha-resultado">
+
                 <span>Previsão da IA</span>
-                <strong id="previsao">Não disponível</strong>
+
+                <strong id="previsao">
+                    Aguardando jogada
+                </strong>
+
             </div>
 
-           <p class="observacao">
-           A previsão da IA é comparada ao estado real
-           após cada jogada. Os erros são registrados
-           para avaliar o desempenho do classificador.
-</p>
+            <p class="observacao">
+                A previsão da IA é comparada ao estado real
+                após cada jogada. Os erros são registrados
+                para avaliar o desempenho do classificador.
+            </p>
+
         </section>
 
-<section class="placar" aria-label="Desempenho da IA">
-    <div>
-        <strong id="acertos-ia">0</strong>
-        <span>Acertos da IA</span>
-    </div>
 
-    <div>
-        <strong id="erros-ia">0</strong>
-        <span>Erros da IA</span>
-    </div>
+        <!-- DESEMPENHO DA INTELIGÊNCIA ARTIFICIAL -->
+        <section
+            class="placar"
+            aria-label="Desempenho da IA">
 
-    <div>
-        <strong id="acuracia-ia">—</strong>
-        <span>Acurácia da IA</span>
-    </div>
-</section>
-
-
-        <section class="placar">
             <div>
+
+                <strong id="acertos-ia">0</strong>
+
+                <span>Acertos da IA</span>
+
+            </div>
+
+            <div>
+
+                <strong id="erros-ia">0</strong>
+
+                <span>Erros da IA</span>
+
+            </div>
+
+            <div>
+
+                <strong id="acuracia-ia">—</strong>
+
+                <span>Acurácia da IA</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- PLACAR DAS PARTIDAS -->
+        <section
+            class="placar"
+            aria-label="Placar das partidas">
+
+            <div>
+
                 <strong id="vitorias-x">0</strong>
+
                 <span>Suas vitórias</span>
+
             </div>
 
             <div>
+
                 <strong id="empates">0</strong>
+
                 <span>Empates</span>
+
             </div>
 
             <div>
+
                 <strong id="vitorias-o">0</strong>
+
                 <span>Vitórias do PC</span>
+
             </div>
+
         </section>
 
-        <button id="reiniciar" class="botao-reiniciar">
+
+        <!-- BOTÃO DE REINICIAR -->
+        <button
+            id="reiniciar"
+            class="botao-reiniciar"
+            type="button">
+
             Nova partida
+
         </button>
 
     </main>
+
 </body>
+
 </html>

@@ -1,102 +1,147 @@
 
+/* =====================================
+   CONFIGURAÇÕES GERAIS
+===================================== */
+
 * {
     box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
 }
 
 body {
     margin: 0;
     min-height: 100vh;
-    padding: 35px 16px;
+    min-height: 100dvh;
+    padding: 10px 14px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-family: Arial, sans-serif;
     background: #000000;
     color: #26334b;
 }
 
+
+/* =====================================
+   CONTAINER PRINCIPAL
+===================================== */
+
 .container {
     width: 100%;
-    max-width: 480px;
+    max-width: 400px;
+
     background: white;
-    padding: 32px;
-    border-radius: 20px;
-    box-shadow: 0 12px 40px rgba(30, 45, 80, 0.08);
+    padding: 16px 22px;
+
+    border-radius: 16px;
+
+    box-shadow: 0 12px 40px
+        rgba(30, 45, 80, 0.08);
 }
+
+
+/* =====================================
+   CABEÇALHO
+===================================== */
 
 .cabecalho {
     text-align: center;
-    margin-bottom: 26px;
+    margin-bottom: 10px;
 }
 
 .etiqueta {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: bold;
     letter-spacing: 2px;
     color: #6474d9;
 }
 
 h1 {
-    margin: 10px 0;
-    font-size: 32px;
+    margin: 5px 0;
+    font-size: 25px;
 }
 
 .cabecalho p {
-    font-size: 13px;
-    line-height: 1.6;
+    margin: 4px 0;
+    font-size: 11px;
+    line-height: 1.35;
     color: #8390a3;
 }
 
+
+/* =====================================
+   SELEÇÃO DO ALGORITMO
+===================================== */
+
 .selecao {
-    margin-bottom: 26px;
+    margin-bottom: 11px;
 }
 
 .selecao label {
     display: block;
-    margin-bottom: 9px;
-    font-size: 13px;
+    margin-bottom: 5px;
+
+    font-size: 12px;
     font-weight: bold;
 }
 
 .selecao select {
     width: 100%;
-    padding: 13px;
+    padding: 8px;
+
     border: 1px solid #dce2ed;
-    border-radius: 9px;
+    border-radius: 8px;
+
     background: #f8faff;
     color: #26334b;
-    font-size: 14px;
+
+    font-size: 12px;
     cursor: pointer;
 }
 
 .status-modelo {
-    margin: 9px 0 0;
-    font-size: 11px;
+    margin: 5px 0 0;
+    font-size: 10px;
     color: #8b95a6;
 }
+
+
+/* =====================================
+   JOGADORES
+===================================== */
 
 .jogadores {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 24px;
+
+    gap: 8px;
+    margin-bottom: 10px;
 }
 
 .jogador {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 7px;
 }
 
 .simbolo {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    font-size: 23px;
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 8px;
+
+    font-size: 19px;
     font-weight: bold;
 }
 
@@ -112,48 +157,69 @@ h1 {
 
 .jogador strong {
     display: block;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .jogador small {
     display: block;
-    margin-top: 4px;
-    font-size: 10px;
+    margin-top: 2px;
+
+    font-size: 9px;
     color: #8b95a6;
 }
 
 .versus {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: bold;
     color: #a5adbc;
 }
 
+
+/* =====================================
+   MENSAGEM DA PARTIDA
+===================================== */
+
 #mensagem {
-    min-height: 20px;
+    min-height: 16px;
+    margin: 0 0 8px;
+
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    margin-bottom: 18px;
 }
+
+
+/* =====================================
+   TABULEIRO
+===================================== */
 
 .tabuleiro {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 9px;
+
+    gap: 6px;
     width: 100%;
-    max-width: 315px;
+    max-width: 195px;
+
     margin: 0 auto;
 }
 
 .casa {
     aspect-ratio: 1;
+
     border: 2px solid #dce2ed;
-    border-radius: 12px;
+    border-radius: 9px;
+
     background: #f8faff;
-    font-size: 48px;
+
+    font-size: 30px;
     font-weight: bold;
+
     cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
+
+    transition:
+        background 0.2s,
+        transform 0.15s;
 }
 
 .casa:hover:not(:disabled) {
@@ -173,26 +239,38 @@ h1 {
     cursor: default;
 }
 
+
+/* =====================================
+   CLASSIFICAÇÃO DA IA
+===================================== */
+
 .classificacao {
-    margin-top: 28px;
-    padding: 18px;
+    margin-top: 11px;
+    padding: 10px 12px;
+
     background: #f8faff;
+
     border: 1px solid #e5eaf3;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 .classificacao h2 {
-    margin: 0 0 17px;
-    font-size: 14px;
+    margin: 0 0 7px;
+
+    font-size: 12px;
     text-align: center;
 }
 
 .linha-resultado {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 10px 0;
-    font-size: 13px;
+
+    gap: 10px;
+    padding: 6px 0;
+
+    font-size: 11px;
+
     border-bottom: 1px solid #e5eaf3;
 }
 
@@ -202,46 +280,66 @@ h1 {
 }
 
 .observacao {
-    margin: 14px 0 0;
-    font-size: 11px;
-    line-height: 1.5;
+    margin: 7px 0 0;
+
+    font-size: 9px;
+    line-height: 1.35;
+
     color: #8b95a6;
 }
+
+
+/* =====================================
+   PLACARES
+===================================== */
 
 .placar {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin: 22px 0;
+
+    gap: 7px;
+    margin: 9px 0;
+
     text-align: center;
 }
 
 .placar div {
-    padding: 12px 5px;
+    padding: 8px 4px;
+
     background: #f8faff;
-    border-radius: 10px;
+    border-radius: 9px;
 }
 
 .placar strong {
     display: block;
-    margin-bottom: 5px;
-    font-size: 22px;
+
+    margin-bottom: 3px;
+    font-size: 18px;
 }
 
 .placar span {
-    font-size: 10px;
+    font-size: 9px;
     color: #8390a3;
 }
 
+
+/* =====================================
+   BOTÃO NOVA PARTIDA
+===================================== */
+
 .botao-reiniciar {
     width: 100%;
-    padding: 14px;
+    padding: 10px;
+
     border: none;
-    border-radius: 10px;
+    border-radius: 9px;
+
     background: #5367cf;
     color: white;
-    font-size: 14px;
+
+    font-size: 12px;
     font-weight: bold;
+
     cursor: pointer;
 }
 
@@ -249,16 +347,152 @@ h1 {
     background: #4054b8;
 }
 
-@media (max-width: 420px) {
+
+/* =====================================
+   AJUSTE PARA TELAS MAIS BAIXAS
+===================================== */
+
+@media (max-height: 800px) {
+
+    body {
+        padding: 6px 10px;
+    }
+
     .container {
-        padding: 22px;
+        padding: 11px 18px;
+    }
+
+    .cabecalho {
+        margin-bottom: 7px;
     }
 
     h1 {
-        font-size: 28px;
+        font-size: 22px;
+        margin: 3px 0;
+    }
+
+    .selecao {
+        margin-bottom: 7px;
+    }
+
+    .selecao select {
+        padding: 6px;
+    }
+
+    .jogadores {
+        margin-bottom: 7px;
+    }
+
+    #mensagem {
+        margin-bottom: 6px;
+    }
+
+    .tabuleiro {
+        max-width: 170px;
+        gap: 5px;
     }
 
     .casa {
-        font-size: 40px;
+        font-size: 26px;
+    }
+
+    .classificacao {
+        margin-top: 8px;
+        padding: 7px 10px;
+    }
+
+    .classificacao h2 {
+        margin-bottom: 4px;
+    }
+
+    .linha-resultado {
+        padding: 4px 0;
+    }
+
+    .observacao {
+        margin-top: 5px;
+    }
+
+    .placar {
+        margin: 6px 0;
+    }
+
+    .placar div {
+        padding: 5px 3px;
+    }
+
+    .placar strong {
+        font-size: 16px;
+        margin-bottom: 2px;
+    }
+
+    .botao-reiniciar {
+        padding: 8px;
+    }
+}
+
+
+/* =====================================
+   TELAS MUITO BAIXAS
+===================================== */
+
+@media (max-height: 650px) {
+
+    body {
+        align-items: flex-start;
+    }
+
+    .container {
+        padding: 9px 15px;
+    }
+
+    .cabecalho {
+        margin-bottom: 5px;
+    }
+
+    .tabuleiro {
+        max-width: 145px;
+    }
+
+    .simbolo {
+        width: 27px;
+        height: 27px;
+    }
+
+    .classificacao {
+        margin-top: 6px;
+    }
+
+    .placar {
+        margin: 4px 0;
+    }
+}
+
+
+/* =====================================
+   CELULARES
+===================================== */
+
+@media (max-width: 420px) {
+
+    body {
+        padding: 8px;
+        align-items: flex-start;
+    }
+
+    .container {
+        padding: 14px;
+    }
+
+    .jogador {
+        gap: 5px;
+    }
+
+    .jogador strong {
+        font-size: 10px;
+    }
+
+    .jogador small {
+        font-size: 9px;
     }
 }

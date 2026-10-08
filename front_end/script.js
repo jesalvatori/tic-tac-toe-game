@@ -91,7 +91,13 @@ function atualizarMetricas() {
 }
 
 function modeloDisponivel() {
-    return seletorAlgoritmo.value === "knn";
+    return [
+        "knn",
+        "mlp",
+        "arvore",
+        "random_forest",
+        "boosting"
+    ].includes(seletorAlgoritmo.value);
 }
 
 function atualizarSelecao() {
