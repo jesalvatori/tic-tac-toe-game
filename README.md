@@ -331,3 +331,19 @@ A resposta apresenta os cinco algoritmos disponíveis no servidor.
 
 https://github.com/jesalvatori/tic-tac-toe-game
 
+## 10. Uso de Inteligência Artificial no Desenvolvimento
+
+Durante o desenvolvimento do projeto, foi utilizada a ferramenta ChatGPT (OpenAI) como recurso de apoio.
+
+A ferramenta auxiliou nas seguintes atividades:
+
+Compreensão dos algoritmos: esclarecimento de conceitos relacionados a KNN, MLP, Árvore de Decisão, Random Forest e Gradient Boosting.
+
+Desenvolvimento e integração: apoio na elaboração, revisão e depuração de trechos de código Python, Flask e JavaScript, incluindo a integração dos classificadores ao Front End.
+
+Análise dos experimentos: auxílio na interpretação das métricas de avaliação, comparação dos resultados e identificação de possíveis problemas, como overfitting.
+
+Documentação: apoio na organização e revisão do README e do relatório em PowerPoint.
+
+A ferramenta foi utilizada como suporte ao processo de desenvolvimento,a execução dos experimentos, a avaliação dos resultados e a validação do funcionamento da aplicação permaneceram sob responsabilidade dos integrantes do grupo.
+
