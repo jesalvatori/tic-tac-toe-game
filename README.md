@@ -4,196 +4,330 @@ Trabalho desenvolvido para a disciplina de **Inteligência Artificial**, do curs
 
 ## 1. Objetivo
 
-Desenvolver e avaliar algoritmos de aprendizado de máquina capazes de classificar o estado de um tabuleiro de Jogo da Velha em quatro categorias:
+Desenvolver, avaliar e integrar algoritmos de aprendizado de máquina capazes de classificar o estado de um tabuleiro de Jogo da Velha em quatro categorias:
 
 - **Tem jogo:** a partida ainda não terminou.
 - **X venceu:** o jogador X completou uma combinação vencedora.
 - **O venceu:** o jogador O completou uma combinação vencedora.
 - **Empate:** o tabuleiro está completo e não existe vencedor.
 
-O projeto também possui uma interface interativa na qual o usuário joga contra o computador, que realiza jogadas aleatórias. Após cada jogada, o algoritmo selecionado prevê o estado do tabuleiro.
+O projeto possui uma interface web interativa na qual o usuário joga contra o computador, que realiza jogadas aleatórias. Após cada jogada, o algoritmo selecionado prevê o estado do tabuleiro.
+
+A interface permite alternar entre cinco classificadores e acompanhar o desempenho de cada um durante as partidas.
 
 ## 2. Algoritmos
 
+Foram desenvolvidos cinco algoritmos de classificação:
+
 | Algoritmo | Situação |
 |---|---|
-| K-Nearest Neighbors (KNN) | Implementado e integrado ao jogo |
-| Multilayer Perceptron (MLP) | Em desenvolvimento |
-| Árvore de Decisão | Em desenvolvimento |
-| Random Forest | Em desenvolvimento |
-| Boosting | Em desenvolvimento |
+| K-Nearest Neighbors (KNN) | Implementado e integrado |
+| Multilayer Perceptron (MLP) | Implementado e integrado |
+| Árvore de Decisão | Implementado e integrado |
+| Random Forest | Implementado e integrado |
+| Gradient Boosting | Implementado e integrado |
 
-Cada algoritmo é avaliado nas duas abordagens de representação dos dados.
+Os modelos foram desenvolvidos e avaliados individualmente, com experimentos de treinamento, validação e teste.
+
+Na integração atual com o jogo:
+
+- **KNN:** utiliza a Abordagem 2, com K = 9.
+- **MLP:** utiliza a Abordagem 2, com duas camadas ocultas de 32 e 16 neurônios.
+- **Árvore de Decisão:** utiliza o modelo salvo da Abordagem 2.
+- **Random Forest:** utiliza a configuração `rf_3`, treinada com o dataset original.
+- **Gradient Boosting:** utiliza o modelo salvo da Abordagem 2.
+
+A configuração da Random Forest deve ser conferida com a versão final dos experimentos antes da entrega.
 
 ## 3. Dataset
 
-Os dados estão divididos fisicamente em três arquivos, utilizados por todos os algoritmos:
+Os dados originais estão divididos em três arquivos:
 
 - `treino.csv`: treinamento dos modelos.
 - `validacao.csv`: seleção de parâmetros e comparação de configurações.
 - `teste.csv`: avaliação final dos modelos.
 
-Os arquivos originais estão em `dataset/`. A partir deles, foram geradas duas representações dos tabuleiros.
+Os arquivos originais estão localizados na pasta `dataset/`.
+
+A partir desses dados, foram desenvolvidas duas abordagens de representação dos tabuleiros.
 
 ### 3.1. Abordagem 1 — Representação das casas
 
-Nove atributos, um para cada posição do tabuleiro, com os símbolos convertidos em valores numéricos: X = 1, O = -1 e casa vazia = 0.
+Utiliza nove atributos, correspondentes às nove posições do tabuleiro.
 
-- Script: `dataset/abordagem_1/preparar_a1.py`
-- Arquivos gerados: `dataset/abordagem_1/`
+Os símbolos são convertidos em valores numéricos:
+
+- X = 1
+- O = -1
+- Casa vazia = 0
+
+**Script:** `dataset/abordagem_1/preparar_a1.py`
+
+**Arquivos gerados:** `dataset/abordagem_1/`
 
 ### 3.2. Abordagem 2 — Características derivadas
 
-Quinze características calculadas a partir do tabuleiro: quantidade de X e de O, ocupação das nove casas, linhas com dois X, linhas com dois O, quantidade de casas vazias e indicador do próximo jogador.
+Utiliza quinze características calculadas a partir do tabuleiro:
 
-- Script: `dataset/abordagem_2/preparar_a2.py`
-- Arquivos gerados: `dataset/abordagem_2/`
+- Quantidade de X.
+- Quantidade de O.
+- Ocupação das nove casas.
+- Quantidade de linhas com dois X.
+- Quantidade de linhas com dois O.
+- Quantidade de casas vazias.
+- Indicador do próximo jogador.
 
-Em ambas as abordagens, o balanceamento de classes é aplicado somente ao conjunto de treinamento.
+**Script:** `dataset/abordagem_2/preparar_a2.py`
 
-## 4. Experimentos
+**Arquivos gerados:** `dataset/abordagem_2/`
 
-Cada algoritmo possui uma pasta em `algoritmos/`, com o script de treinamento e um notebook contendo os experimentos, a seleção de parâmetros e a avaliação no conjunto de teste.
+Em ambas as abordagens, o balanceamento das classes é aplicado somente ao conjunto de treinamento.
 
-A análise completa e a comparação entre os classificadores estão em `relatorio/relatorio_t1.md`.
+A integração atual da Random Forest utiliza diretamente o dataset original, conforme o experimento selecionado para esse algoritmo.
+
+## 4. Experimentos e avaliação
+
+Cada algoritmo possui uma pasta específica em `algoritmos/`, contendo seu código de treinamento e notebook de experimentos.
+
+Os experimentos incluem, conforme a implementação de cada algoritmo:
+
+- Treinamento de diferentes configurações.
+- Seleção de parâmetros com dados de validação.
+- Comparação entre modelos.
+- Avaliação de desempenho.
+- Análise dos resultados obtidos.
+
+As principais métricas utilizadas são:
+
+- **Acurácia:** proporção de classificações corretas.
+- **Precisão:** proporção de previsões positivas corretas para cada classe.
+- **Recall:** capacidade de identificar corretamente os exemplos de cada classe.
+- **F1-score:** média harmônica entre precisão e recall.
+
+O F1-score macro permite avaliar o desempenho considerando todas as classes.
+
+A análise e a comparação entre os classificadores são documentadas em `relatorio/relatorio_t1.md`.
 
 ## 5. Interface do jogo
 
-Desenvolvida com HTML, CSS e JavaScript, com Flask (Python) como servidor local.
+A interface foi desenvolvida utilizando:
 
-O usuário controla o jogador **X** e o computador controla o jogador **O**, com jogadas aleatórias. O classificador não escolhe jogadas: sua função é identificar o estado do tabuleiro.
+- **HTML:** estrutura da página.
+- **CSS:** apresentação visual e layout responsivo.
+- **JavaScript:** lógica das partidas e comunicação com o servidor.
+- **Flask (Python):** integração entre o Front End e os classificadores.
 
-### 5.1. Integração com os modelos
+O usuário controla o jogador **X**, enquanto o computador controla o jogador **O**, realizando jogadas aleatórias.
+
+Os algoritmos de aprendizado de máquina não escolhem as jogadas do computador. Sua função é classificar o estado atual do tabuleiro.
+
+### 5.1. Seleção dos algoritmos
+
+O usuário pode selecionar qualquer um dos cinco algoritmos disponíveis:
+
+1. KNN
+2. MLP
+3. Árvore de Decisão
+4. Random Forest
+5. Gradient Boosting
+
+A classificação é realizada pelo algoritmo selecionado na interface.
+
+### 5.2. Integração com os modelos
+
+A comunicação entre o Front End e o Back End acontece da seguinte forma:
 
 1. O usuário ou o computador realiza uma jogada.
-2. O JavaScript envia o tabuleiro ao servidor Flask.
-3. O servidor prepara os atributos utilizados pelo modelo.
+2. O JavaScript envia o estado do tabuleiro e o algoritmo selecionado ao servidor Flask.
+3. O Flask converte o tabuleiro para a representação utilizada pelo modelo.
 4. O classificador realiza a previsão.
-5. O servidor devolve a classificação ao frontend.
-6. A interface compara a previsão com o estado real do tabuleiro.
+5. O servidor retorna o resultado ao JavaScript.
+6. A interface compara a previsão com o estado real.
+7. Os indicadores de desempenho são atualizados.
 
-Atualmente, a integração está disponível para o KNN.
+A comunicação é realizada por meio da rota `POST /api/prever`.
 
-### 5.2. Informações exibidas
+O servidor também disponibiliza a rota `GET /api/modelos`, utilizada para verificar os algoritmos carregados.
 
-- Estado real do tabuleiro, calculado pelas regras do jogo.
-- Previsão do algoritmo selecionado.
-- Acertos, erros e acurácia acumulada da IA, separados por algoritmo.
-- Placar de vitórias e empates.
+### 5.3. Informações exibidas
 
-A acurácia é calculada por:
+A interface apresenta:
 
-`Acurácia = Acertos / (Acertos + Erros) × 100`
+- Tabuleiro interativo de Jogo da Velha.
+- Seleção do algoritmo de classificação.
+- Estado real do tabuleiro.
+- Previsão realizada pela IA.
+- Quantidade de acertos da IA.
+- Quantidade de erros da IA.
+- Acurácia acumulada da IA.
+- Quantidade de vitórias do jogador.
+- Quantidade de vitórias do computador.
+- Quantidade de empates.
+- Botão para iniciar uma nova partida.
 
-A classificação é realizada após cada jogada, inclusive nas do computador. Se o classificador indicar incorretamente que a partida terminou, o erro é contabilizado e o jogo continua. Se houver um resultado final real, a partida é encerrada, mesmo que o classificador não o reconheça.
+Os indicadores de desempenho dos classificadores são mantidos separadamente por algoritmo.
+
+### 5.4. Cálculo da acurácia
+
+A acurácia exibida durante o jogo é calculada por:
+
+**Acurácia = Acertos / (Acertos + Erros) × 100**
+
+Essa acurácia corresponde às classificações realizadas durante as partidas interativas.
+
+Ela não deve ser confundida com a acurácia obtida nos experimentos utilizando o conjunto de teste.
+
+### 5.5. Regras do jogo
+
+A classificação ocorre após cada jogada, inclusive nas jogadas do computador.
+
+Se o classificador indicar incorretamente que a partida terminou, o erro será contabilizado, mas o jogo continuará normalmente.
+
+Se houver um resultado final real, a partida será encerrada conforme as regras do Jogo da Velha, independentemente da previsão realizada pelo algoritmo.
 
 ## 6. Estrutura do projeto
 
-```text
-tic-tac-toe-game/
-├── algoritmos/
-│   └── knn/
-│       ├── knn.py
-│       ├── knn.ipynb
-│       └── knn_comparacao_abordagens.png
-├── dataset/
-│   ├── abordagem_1/
-│   │   ├── preparar_a1.py
-│   │   ├── treino.csv
-│   │   ├── validacao.csv
-│   │   └── teste.csv
-│   ├── abordagem_2/
-│   │   ├── preparar_a2.py
-│   │   ├── treino.csv
-│   │   ├── validacao.csv
-│   │   └── teste.csv
-│   ├── treino.csv
-│   ├── validacao.csv
-│   └── teste.csv
-├── front_end/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-├── relatorio/
-│   └── relatorio_t1.md
-├── app.py
-├── README.md
-└── .gitignore
-```
+O projeto está organizado nas seguintes pastas e arquivos principais:
+
+- **`algoritmos/`**
+  - `knn/`: implementação e experimentos do KNN.
+  - `mlp/`: implementação e experimentos da MLP.
+  - `arvore_decisao/`: implementação e modelo da Árvore de Decisão.
+  - `random_forest/`: implementação e experimentos da Random Forest.
+  - `boosting/`: implementação e modelo do Gradient Boosting.
+- **`dataset/`**
+  - `abordagem_1/`: dados e preparação da primeira abordagem.
+  - `abordagem_2/`: dados e preparação da segunda abordagem.
+  - `treino.csv`
+  - `validacao.csv`
+  - `teste.csv`
+- **`front_end/`**
+  - `index.html`: estrutura da interface.
+  - `style.css`: estilos e layout responsivo.
+  - `script.js`: funcionamento do jogo e comunicação com Flask.
+- **`relatorio/`**
+  - `relatorio_t1.md`: relatório dos experimentos e resultados.
+- **`app.py`**: servidor Flask e integração dos classificadores.
+- **`README.md`**: documentação do projeto.
+- **`.gitignore`**: arquivos e diretórios ignorados pelo Git.
 
 ## 7. Como executar o projeto
 
 ### 7.1. Requisitos
 
 - Python 3
-- Flask, Pandas e Scikit-learn
-- Matplotlib e Jupyter (para os notebooks)
+- Flask
+- Pandas
+- Scikit-learn
+- Joblib
+- Matplotlib e Jupyter para executar os experimentos
 - Navegador web
 
 ### 7.2. Clonar o repositório
 
-```bash
-git clone https://github.com/jesalvatori/tic-tac-toe-game.git
-cd tic-tac-toe-game
-```
+Execute:
+
+`git clone https://github.com/jesalvatori/tic-tac-toe-game.git`
+
+Entre na pasta do projeto:
+
+`cd tic-tac-toe-game`
 
 ### 7.3. Criar e ativar o ambiente virtual
 
-macOS ou Linux:
+**macOS ou Linux:**
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+Criar o ambiente:
 
-Windows:
+`python3 -m venv .venv`
 
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
+Ativar:
+
+`source .venv/bin/activate`
+
+**Windows:**
+
+Criar o ambiente:
+
+`python -m venv .venv`
+
+Ativar:
+
+`.venv\Scripts\activate`
 
 ### 7.4. Instalar as dependências
 
-```bash
-python -m pip install flask pandas scikit-learn matplotlib jupyter
-```
+Execute:
+
+`python -m pip install flask pandas scikit-learn joblib matplotlib jupyter`
 
 ### 7.5. Gerar os dados das abordagens (opcional)
 
-Os arquivos processados já estão no repositório. Para gerá-los novamente:
+Os arquivos processados já estão disponíveis no projeto.
 
-```bash
-python dataset/abordagem_1/preparar_a1.py
-python dataset/abordagem_2/preparar_a2.py
-```
+Caso seja necessário gerá-los novamente, execute:
+
+`python dataset/abordagem_1/preparar_a1.py`
+
+`python dataset/abordagem_2/preparar_a2.py`
 
 ### 7.6. Iniciar o servidor Flask
 
-Execute a partir da pasta raiz do projeto (`tic-tac-toe-game/`):
+Na pasta raiz do projeto, execute:
 
-```bash
-python app.py
-```
+`python app.py`
 
-Em seguida, abra no navegador: http://127.0.0.1:5000
+Aguarde o carregamento dos cinco modelos.
 
-### 7.7. Jogar
+Na configuração atual, o servidor utiliza o endereço:
 
-1. Selecione o algoritmo KNN.
-2. Clique em uma casa vazia para marcar X.
-3. Aguarde a jogada aleatória do computador.
-4. Acompanhe as previsões e as métricas da IA.
-5. Clique em **Nova partida** para jogar novamente.
+**http://127.0.0.1:5001**
 
-## 8. Etapas pendentes
+### 7.7. Verificar os modelos
 
-- Finalizar os outros quatro algoritmos.
-- Integrar os modelos restantes ao Flask.
-- Comparar o desempenho dos cinco classificadores.
-- Registrar os resultados dos testes interativos.
-- Completar o relatório final do grupo.
+Para consultar os modelos carregados, acesse:
+
+**http://127.0.0.1:5001/api/modelos**
+
+A resposta apresenta os cinco algoritmos disponíveis no servidor.
+
+### 7.8. Jogar
+
+1. Abra o jogo no navegador.
+2. Selecione um dos cinco algoritmos.
+3. Clique em uma casa vazia para marcar X.
+4. Aguarde a jogada aleatória do computador.
+5. Observe a previsão realizada pelo classificador.
+6. Acompanhe os acertos, erros e a acurácia da IA.
+7. Clique em **Nova partida** para jogar novamente.
+8. Selecione outro algoritmo para comparar o comportamento das classificações.
+
+## 8. Situação atual e etapas finais
+
+### Funcionalidades implementadas
+
+- [x] Preparação dos datasets.
+- [x] Implementação das duas abordagens de representação.
+- [x] Desenvolvimento dos cinco algoritmos.
+- [x] Desenvolvimento da interface interativa.
+- [x] Integração do KNN ao Flask.
+- [x] Integração da MLP ao Flask.
+- [x] Integração da Árvore de Decisão ao Flask.
+- [x] Integração da Random Forest ao Flask.
+- [x] Integração do Gradient Boosting ao Flask.
+- [x] Seleção dos algoritmos pela interface.
+- [x] Exibição das previsões e indicadores de desempenho.
+- [x] Ajuste do layout para diferentes tamanhos de tela.
+
+### Etapas de validação e entrega
+
+- [ ] Confirmar a configuração definitiva da Random Forest.
+- [ ] Validar as previsões dos cinco algoritmos durante as partidas.
+- [ ] Consolidar a comparação dos resultados experimentais.
+- [ ] Revisar e finalizar o relatório do grupo.
+- [ ] Enviar e verificar a versão final no GitHub.
 
 ## 9. Repositório
 
 https://github.com/jesalvatori/tic-tac-toe-game
+
