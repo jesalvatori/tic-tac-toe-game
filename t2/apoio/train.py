@@ -1,8 +1,6 @@
 """
-Executa o treinamento pelo terminal, sem precisar abrir a interface.
-
-Com python -m t2.apoio.train conseguimos repetir o treino com a configuração
-definida e guardar a rede junto dos resultados.
+Treino pelo terminal: python -m t2.apoio.train.
+Usa a configuração definida e salva a rede junto dos resultados.
 """
 import argparse
 import json

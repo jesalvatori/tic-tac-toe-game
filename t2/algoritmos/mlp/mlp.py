@@ -1,15 +1,14 @@
 """
-A rede recebe o tabuleiro e calcula as saídas para escolher uma casa.
-Os pesos chegam do algoritmo genético, sem usar backpropagation.
+Rede que recebe o tabuleiro e escolhe uma casa pelas saídas calculadas.
+O genético ajusta os pesos, sem backpropagation.
 """
 import numpy as np
 
 class Network:
     """
-    A rede recebe 9 entradas e passa por H neurônios ocultos com tanh.
-
-    No final temos 9 saídas lineares, uma para cada casa. Tanto a camada
-    oculta quanto a de saída têm bias, que também entram no cromossomo.
+    São 9 entradas, H neurônios ocultos com tanh e 9 saídas lineares.
+    Cada saída representa uma casa. Os pesos e os bias das duas camadas
+    ficam juntos no cromossomo.
     """
     def __init__(self, weights, hidden=9):
         self.hidden = hidden
@@ -28,9 +27,8 @@ class Network:
         return 9*hidden + hidden + hidden*9 + 9
 
     def forward(self, board, player):
-        # A entrada precisa ter o mesmo sentido quando a rede joga como X
-        # ou como O. Por isso a própria peça vale 1, a do adversário vale -1
-        # e a casa vazia continua valendo 0.
+        # Lemos o tabuleiro pelo lado da rede, tanto quando ela é X quanto O.
+        # A peça dela vale 1, a do adversário -1 e a casa vazia 0.
         inputs = np.asarray(board, dtype=float) * player
         activation = np.tanh(inputs @ self.w1 + self.b1)
         return activation @ self.w2 + self.b2
@@ -39,10 +37,8 @@ class Network:
         outputs = self.forward(board, player)
         ranking = np.argsort(-outputs, kind='stable')
         raw = int(ranking[0])
-        # Guardamos a primeira escolha mesmo se a casa estiver ocupada,
-        # porque é esse erro que vai receber a penalidade na avaliação.
-        # Para a partida não travar ali, procuramos a próxima casa livre
-        # na ordem das saídas da própria rede.
+        # Se a primeira escolha estiver ocupada, ela continua contando como erro.
+        # A partida segue usando a próxima casa livre no ranking da rede.
         move = next(int(i) for i in ranking if board[i] == 0)
         return raw, move, outputs.tolist()
 

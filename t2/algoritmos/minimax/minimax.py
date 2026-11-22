@@ -7,10 +7,8 @@ from t2.apoio.jogo import result
 @lru_cache(maxsize=None)
 def minimax(board, player):
     """
-    Avalia o tabuleiro do ponto de vista do jogador que está na vez.
-
-    Quando mais de uma ação tem o mesmo melhor valor, o desempate usado
-    para jogar é pelo menor índice. Assim a escolha não depende de sorteio.
+    Calcula o valor do tabuleiro para o jogador da vez e retorna as melhores casas.
+    Na hora de jogar, usamos a de menor índice quando há empate entre elas.
     """
     end = result(board)
     if end is not None:

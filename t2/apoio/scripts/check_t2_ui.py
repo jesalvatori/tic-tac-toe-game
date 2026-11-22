@@ -1,8 +1,7 @@
 """
-Confere os principais passos da interface usando um navegador automatizado.
-
-Para executar, é preciso instalar o Playwright e o Chromium com os comandos
-pip install playwright e playwright install chromium.
+Teste automático dos botões e das telas do jogo.
+Precisa instalar o Playwright e o navegador com pip install playwright
+e playwright install chromium.
 """
 import os
 from pathlib import Path

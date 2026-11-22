@@ -1,7 +1,5 @@
 
-/* =====================================
-   Estilos que valem para a página toda
-===================================== */
+/* Estilos que valem para a página toda */
 
 * {
     box-sizing: border-box;
@@ -28,9 +26,7 @@ body {
 }
 
 
-/* =====================================
-   Painel branco onde fica o jogo
-===================================== */
+/* Painel branco onde fica o jogo */
 
 .container {
     width: 100%;
@@ -46,9 +42,7 @@ body {
 }
 
 
-/* =====================================
-   Título e identificação do trabalho
-===================================== */
+/* Título e identificação do trabalho */
 
 .cabecalho {
     text-align: center;
@@ -75,9 +69,7 @@ h1 {
 }
 
 
-/* =====================================
-   Área de seleção usada na interface
-===================================== */
+/* Área de seleção usada na interface */
 
 .selecao {
     margin-bottom: 11px;
@@ -112,9 +104,7 @@ h1 {
 }
 
 
-/* =====================================
-   Identificação dos jogadores e dos símbolos
-===================================== */
+/* Identificação dos jogadores e dos símbolos */
 
 .jogadores {
     display: flex;
@@ -175,9 +165,7 @@ h1 {
 }
 
 
-/* =====================================
-   Mensagem que acompanha o andamento da partida
-===================================== */
+/* Mensagem que acompanha o andamento da partida */
 
 #mensagem {
     min-height: 16px;
@@ -189,9 +177,7 @@ h1 {
 }
 
 
-/* =====================================
-   Casas e organização do tabuleiro
-===================================== */
+/* Casas e organização do tabuleiro */
 
 .tabuleiro {
     display: grid;
@@ -240,9 +226,7 @@ h1 {
 }
 
 
-/* =====================================
-   Área de informações da rede no estilo da interface anterior
-===================================== */
+/* Área de informações da rede no estilo da interface anterior */
 
 .classificacao {
     margin-top: 11px;
@@ -289,9 +273,7 @@ h1 {
 }
 
 
-/* =====================================
-   Contagens mostradas abaixo do jogo
-===================================== */
+/* Contagens mostradas abaixo do jogo */
 
 .placar {
     display: grid;
@@ -323,9 +305,7 @@ h1 {
 }
 
 
-/* =====================================
-   Botão para começar outra partida
-===================================== */
+/* Botão para começar outra partida */
 
 .botao-reiniciar {
     width: 100%;
@@ -348,9 +328,7 @@ h1 {
 }
 
 
-/* =====================================
-   Diminuímos os espaços quando a tela tem menos altura
-===================================== */
+/* Diminuímos os espaços quando a tela tem menos altura */
 
 @media (max-height: 800px) {
 
@@ -432,9 +410,7 @@ h1 {
 }
 
 
-/* =====================================
-   Ajustes para quando a altura disponível é ainda menor
-===================================== */
+/* Ajustes para quando a altura disponível é ainda menor */
 
 @media (max-height: 650px) {
 
@@ -469,9 +445,7 @@ h1 {
 }
 
 
-/* =====================================
-   Ajustes para a largura do celular
-===================================== */
+/* Ajustes para a largura do celular */
 
 @media (max-width: 420px) {
 
@@ -497,8 +471,7 @@ h1 {
     }
 }
 
-/* A partir daqui ficam os controles acrescentados para o T2.
-   Mantivemos a base do T1 acima para o jogo continuar com o mesmo visual. */
+/* Controles do T2, usando o mesmo visual do T1. */
 body { align-items: flex-start; }
 .container { margin: 12px 0; }
 .layout { display: block; }

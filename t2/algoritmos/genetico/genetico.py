@@ -1,6 +1,6 @@
 """
-O algoritmo genético monta a população e evolui os pesos das redes.
-A avaliação das partidas fica no arquivo de treinamento.
+Cria a população e ajusta os pesos das redes a cada geração.
+As partidas e as recompensas ficam em treinamento.py.
 """
 from dataclasses import dataclass, asdict
 import numpy as np
@@ -38,9 +38,8 @@ class Config:
 
 
 def crossover(a, b, rng, alpha):
-    # No BLX-alpha, cada gene recebe seu próprio beta, sorteado no intervalo
-    # [-alpha, 1+alpha]. A combinação pode gerar um peso diferente dos dois
-    # pais, em vez de só copiar um dos valores que já existiam.
+    # Sorteamos um beta para cada peso, entre -alpha e 1+alpha.
+    # Assim o BLX-alpha pode criar valores diferentes dos pesos dos pais.
     beta = rng.uniform(-alpha,1+alpha,len(a))
     return np.clip(a + beta*(b-a), -1, 1)
 
@@ -64,9 +63,8 @@ class Trainer:
         c = self.config
         hard = self.generation >= max(1,int(c.generations*.4))
         phase = 'medio+dificil' if hard else 'medio'
-        # Quando entra o modo difícil, o conjunto de partidas da avaliação
-        # muda. Reiniciamos a comparação para não tratar a aptidão da fase
-        # anterior como se ela tivesse sido obtida nas mesmas condições.
+        # Com a entrada do difícil, mudam as partidas usadas na avaliação.
+        # A contagem de gerações sem melhora começa de novo nessa fase.
         if phase != self.previous_phase:
             self.best_fitness, self.stagnant = float('-inf'), 0
             self.previous_phase = phase
@@ -74,9 +72,8 @@ class Trainer:
             parents = self.population
             next_population = [parents[i].copy() for i in range(c.elite)]
             def tournament():
-                # A população já está ordenada da maior aptidão para a menor.
-                # Então o menor índice entre os sorteados é justamente o
-                # melhor candidato desse torneio.
+                # A população já está em ordem de aptidão. Entre os sorteados,
+                # o menor índice corresponde ao melhor indivíduo.
                 return parents[int(self.rng.choice(c.population,c.tournament,replace=False).min())]
             while len(next_population) < c.population:
                 child = crossover(tournament(),tournament(),self.rng,c.alpha)
@@ -84,9 +81,8 @@ class Trainer:
                 child[mask] += self.rng.normal(0,c.sigma,int(mask.sum()))
                 next_population.append(np.clip(child,-1,1))
             self.population = np.array(next_population)
-        # Todos os indivíduos são avaliados com as mesmas sementes. Assim,
-        # uma rede não ganha vantagem só por receber outros sorteios no modo
-        # médio, e conseguimos repetir a avaliação com a mesma configuração.
+        # Usamos as mesmas sementes para todos receberem os mesmos sorteios
+        # no médio. Isso também permite repetir o treino.
         results = [evaluate(Network(w,c.hidden),c.medium_games,hard,c.seed) for w in self.population]
         order = sorted(range(c.population),key=lambda i:results[i]['fitness'],reverse=True)
         self.population = self.population[order]

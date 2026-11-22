@@ -1,8 +1,6 @@
 """
-Servidor usado para abrir o jogo e o treinamento do T2.
-
-Ele fica separado do servidor do T1. Para iniciar esta parte do projeto,
-o comando, na raiz do repositório, é python -m t2.app.
+Abre a interface do jogo e do treino do T2, separada do T1.
+Para iniciar, rode python -m t2.app na raiz do projeto.
 """
 from pathlib import Path
 from threading import Lock
@@ -67,9 +65,8 @@ def state():
 def test():
     with lock:
         net = model()
-        # Aqui usamos as sementes separadas para o teste. Elas não entram
-        # na seleção do AG, então este resultado não escolhe os indivíduos
-        # que vão passar para a próxima geração.
+        # Estas sementes são só do teste. O AG não usa esse resultado
+        # para escolher os indivíduos da próxima geração.
         return jsonify(medium=evaluate(net,100,False,1000000,True),
                        hard=evaluate(net,0,True,2000000,True))
 
