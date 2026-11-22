@@ -9,10 +9,14 @@ from threading import Lock
 import json
 import numpy as np
 from flask import Flask, jsonify, request, send_from_directory
-from t2.core import Config, Trainer, Network, evaluate, play, opponent_move, minimax, result
+from t2.algoritmos.genetico.genetico import Config, Trainer
+from t2.algoritmos.mlp.mlp import Network
+from t2.algoritmos.minimax.minimax import minimax, opponent_move
+from t2.jogo import result
+from t2.treinamento import evaluate, play
 
 ROOT = Path(__file__).resolve().parent
-app = Flask(__name__, static_folder=str(ROOT/'t2/web'), static_url_path='')
+app = Flask(__name__, static_folder=str(ROOT/'t2/front_end'), static_url_path='')
 app.config['MAX_CONTENT_LENGTH'] = 1024*1024
 lock = Lock()
 trainer = None

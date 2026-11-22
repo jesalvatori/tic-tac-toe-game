@@ -8,7 +8,8 @@ import argparse
 import json
 from pathlib import Path
 from dataclasses import asdict
-from t2.core import Config, Trainer, evaluate
+from t2.algoritmos.genetico.genetico import Config, Trainer
+from t2.treinamento import evaluate
 
 def main():
     parser=argparse.ArgumentParser()
@@ -16,7 +17,7 @@ def main():
     parser.add_argument('--population',type=int,default=80)
     parser.add_argument('--hidden',type=int,default=9)
     parser.add_argument('--seed',type=int,default=42)
-    parser.add_argument('--output',default='t2/results')
+    parser.add_argument('--output',default='t2/resultados')
     args=parser.parse_args()
     trainer=Trainer(Config(generations=args.generations,population=args.population,hidden=args.hidden,seed=args.seed))
     baseline=None

@@ -1,6 +1,11 @@
 import unittest
 import numpy as np
-from t2.core import Config, Network, Trainer, crossover, evaluate, minimax, play, result
+from t2.algoritmos.genetico.genetico import Config, Trainer
+from t2.algoritmos.mlp.mlp import Network
+from t2.algoritmos.minimax.minimax import minimax, opponent_move
+from t2.jogo import result
+from t2.treinamento import evaluate, play
+from t2.algoritmos.genetico.genetico import crossover
 from app_t2 import app
 
 class CoreTests(unittest.TestCase):

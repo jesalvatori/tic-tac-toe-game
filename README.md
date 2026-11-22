@@ -89,7 +89,7 @@ Para treinar:
 
 Os demais parâmetros ficam em **Configurações avançadas**. **Pausar** conclui a geração em execução antes de interromper o treino.
 
-Para usar o experimento incluído, clique em **Carregar rede** e selecione [t2/results/rede-t2.json](t2/results/rede-t2.json). Para guardar um novo treinamento, clique em **Salvar rede**. Os pesos ficam na memória do servidor até serem exportados.
+Para usar o experimento incluído, clique em **Carregar rede** e selecione [t2/resultados/rede-t2.json](t2/resultados/rede-t2.json). Para guardar um novo treinamento, clique em **Salvar rede**. Os pesos ficam na memória do servidor até serem exportados.
 
 ### Aptidão e métricas
 
@@ -113,7 +113,7 @@ Treino com 80 indivíduos, 250 gerações, topologia 9–9–9 e semente 42. O t
 
 No difícil, a rede final empatou as duas partidas avaliadas, uma em cada posição inicial. Ainda houve uma escolha inválida. Esses testes mostram melhora neste experimento e não garantem desempenho perfeito contra todas as sequências de jogadas.
 
-Os parâmetros, o histórico e os resultados estão em [T2.md](T2.md) e [t2/results/avaliacao.json](t2/results/avaliacao.json).
+Os parâmetros, o histórico e os resultados estão no [relatório do T2](t2/relatorio/relatorio_t2.md) e [t2/resultados/avaliacao.json](t2/resultados/avaliacao.json).
 
 ### Reproduzir e verificar
 
@@ -122,7 +122,7 @@ python -m t2.train
 python -m unittest discover -s tests -v
 ```
 
-O primeiro comando executa o experimento e grava os arquivos em `t2/results/`. O segundo verifica a lógica do jogo, Minimax, propagação, aptidão, operadores do AG e API.
+O primeiro comando executa o experimento e grava os arquivos em `t2/resultados/`. O segundo verifica a lógica do jogo, Minimax, propagação, aptidão, operadores do AG e API.
 
 ## Arquivos principais
 
@@ -132,10 +132,15 @@ O primeiro comando executa o experimento e grava os arquivos em `t2/results/`. O
 | `front_end/` | Interface do T1 |
 | `algoritmos/` e `dataset/` | Classificadores, experimentos e dados do T1 |
 | `app_t2.py` | Servidor do T2 |
-| `t2/core.py` | Jogo, Minimax, MLP e algoritmo genético |
-| `t2/web/` | Interface do T2 |
+| `t2/algoritmos/mlp/` | Rede neural e propagação |
+| `t2/algoritmos/minimax/` | Minimax nos modos médio e difícil |
+| `t2/algoritmos/genetico/` | População e operadores do algoritmo genético |
+| `t2/jogo.py` | Regras do tabuleiro |
+| `t2/treinamento.py` | Partidas, recompensas e avaliação |
+| `t2/relatorio/relatorio_t2.md` | Relatório do T2 |
+| `t2/front_end/` | Interface do T2 |
 | `t2/train.py` | Treinamento pela linha de comando |
-| `t2/results/` | Rede e resultados do experimento |
+| `t2/resultados/` | Rede e resultados do experimento |
 | `tests/test_t2.py` | Testes da lógica e API do T2 |
 
 ## Apoio no desenvolvimento
