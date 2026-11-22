@@ -2,7 +2,7 @@
 Escolha das jogadas do adversário, nos modos médio e difícil.
 """
 from functools import lru_cache
-from t2.jogo import result
+from t2.apoio.jogo import result
 
 @lru_cache(maxsize=None)
 def minimax(board, player):

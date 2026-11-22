@@ -14,7 +14,7 @@ python3 -m t2.app
 
 Depois é só acessar http://127.0.0.1:5002 no navegador. O T1 continua no `t1/app.py`, com as dependências que já usava. No T2 a rede é outra: esse módulo não importa os classificadores, os datasets nem a MLP do T1.
 
-Para jogar com a rede do experimento que já está no projeto, carregue `t2/resultados/rede-t2.json` pela interface. Também dá para começar uma população e acompanhar o treino, avançando uma geração de cada vez ou deixando executar automaticamente. Ao pedir para pausar, a geração que está rodando termina primeiro.
+Para jogar com a rede do experimento que já está no projeto, carregue `t2/algoritmos/genetico/rede-t2.json` pela interface. Também dá para começar uma população e acompanhar o treino, avançando uma geração de cada vez ou deixando executar automaticamente. Ao pedir para pausar, a geração que está rodando termina primeiro.
 
 A rede fica na memória do servidor. Para guardar os pesos, é preciso exportar o JSON. Outra coisa: o servidor é local e as abas compartilham a mesma sessão de treinamento. Abrir outra aba não cria um treino separado.
 
@@ -117,11 +117,11 @@ Se os parâmetros forem ajustados várias vezes olhando esse mesmo teste, ele ac
 Para repetir a execução:
 
 ```bash
-python3 -m t2.train
-python3 -m unittest discover -s t2/tests -v
+python3 -m t2.apoio.train
+python3 -m unittest discover -s t2/apoio/tests -v
 ```
 
-O `train` grava a rede e as métricas em `t2/resultados`. No JSON da rede também vai o histórico de cada geração, para consultar a evolução depois.
+O `train` grava a rede e as métricas em `t2/algoritmos/genetico`. No JSON da rede também vai o histórico de cada geração, para consultar a evolução depois.
 
 Os testes verificam o Minimax contra todos os caminhos do adversário. Também conferem a propagação, a codificação do tabuleiro, as penalidades, o BLX, o elitismo, a repetição dos resultados com a mesma configuração e a API.
 
@@ -146,21 +146,24 @@ As pastas seguem a separação usada no T1: algoritmos, interface e relatório. 
 | `t2/algoritmos/mlp/mlp.py` | A rede e a propagação das entradas |
 | `t2/algoritmos/minimax/minimax.py` | O adversário nos modos médio e difícil |
 | `t2/algoritmos/genetico/genetico.py` | Configuração, população e operadores do AG |
-| `t2/jogo.py` | Regras para identificar vitória ou empate |
-| `t2/treinamento.py` | Partidas, recompensas e avaliação das redes |
+| `t2/apoio/jogo.py` | Regras para identificar vitória ou empate |
+| `t2/apoio/treinamento.py` | Partidas, recompensas e avaliação das redes |
 | `t2/front_end/` | HTML, CSS e JavaScript do jogo |
-| `t2/resultados/` | Pesos da rede e resultados do experimento |
+| `t2/algoritmos/genetico/` | Notebook, código, pesos da rede, avaliações e saídas do treino |
 | `t2/relatorio/relatorio_t2.md` | Este relatório |
-| `t2/train.py` | Execução do treino pelo terminal |
+| `t2/apoio/train.py` | Execução do treino pelo terminal |
+| `t2/apoio/tests/` e `t2/apoio/scripts/` | Verificações do código e da interface |
 
 O T2 aprende jogando partidas contra o Minimax. Por isso não há uma pasta de dataset igual à do T1, que usava exemplos classificados em arquivos CSV.
 
 ## Executar os experimentos nos notebooks
 
-Cada algoritmo tem seu notebook na mesma pasta do arquivo Python: `t2/algoritmos/mlp/mlp.ipynb`, `t2/algoritmos/minimax/minimax.ipynb` e `t2/algoritmos/genetico/genetico.ipynb`. A organização segue o T1. Primeiro instale as dependências com `python3 -m pip install -r t2/requirements-notebook.txt`. No VS Code, abra o notebook e escolha o kernel do ambiente `.venv`.
+Cada algoritmo tem seu notebook na mesma pasta do arquivo Python: `t2/algoritmos/mlp/mlp.ipynb`, `t2/algoritmos/minimax/minimax.ipynb` e `t2/algoritmos/genetico/genetico.ipynb`. A organização segue o T1. Primeiro instale as dependências com `python3 -m pip install -r t2/apoio/requirements-notebook.txt`. No VS Code, abra o notebook e escolha o kernel do ambiente `.venv`.
 
 O notebook da MLP define a rede e mostra a propagação de um tabuleiro, além de consultar os pesos já treinados. O do Minimax define a busca, os modos e executa exemplos de escolha e de partida. O do genético define a configuração e os operadores e acompanha o treinamento completo, com a população, os gráficos, o teste e a exportação.
 
 Cada notebook pode ser executado por conta própria, sem depender de variáveis de outra sessão. Os arquivos `.py` são os usados pela interface. Se alterarmos o código de um notebook, essa alteração não muda automaticamente o módulo Python correspondente.
 
-Os valores iniciais do treinamento são os mesmos do experimento deste relatório. Se alterarmos a configuração e rodarmos outro treino, os resultados serão os daquela execução. Os arquivos do novo treino ficam em `t2/resultados/rede-notebook.json` e `t2/resultados/avaliacao-notebook.json`. Eles não substituem os arquivos que já acompanham o projeto. Para jogar com essa rede, abra a interface pelo Flask e use a opção de carregar rede.
+Os valores iniciais do treinamento são os mesmos do experimento deste relatório. Se alterarmos a configuração e rodarmos outro treino, os resultados serão os daquela execução. Os arquivos do novo treino ficam em `t2/algoritmos/genetico/rede-notebook.json` e `t2/algoritmos/genetico/avaliacao-notebook.json`. Eles não substituem os arquivos que já acompanham o projeto. Para jogar com essa rede, abra a interface pelo Flask e use a opção de carregar rede.
+
+Os gráficos e as tabelas dos notebooks também ficam na própria pasta de cada algoritmo, em PNG e CSV, como no T1. A pasta `apoio/` reúne as regras, a avaliação e as ferramentas usadas por essas partes. Essa mudança de organização não altera os parâmetros, a função de aptidão nem os resultados apresentados neste relatório.

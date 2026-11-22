@@ -3,7 +3,7 @@ Partidas usadas para avaliar as redes durante o treinamento e no teste.
 Aqui ficam a contagem dos resultados e as recompensas de cada partida.
 """
 import numpy as np
-from t2.jogo import result
+from t2.apoio.jogo import result
 from t2.algoritmos.minimax.minimax import minimax, opponent_move
 
 REWARDS = {'vitoria': 3., 'empate': 1., 'derrota': -3., 'invalida': -2.}

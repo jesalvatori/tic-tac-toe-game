@@ -3,8 +3,8 @@ import numpy as np
 from t2.algoritmos.genetico.genetico import Config, Trainer
 from t2.algoritmos.mlp.mlp import Network
 from t2.algoritmos.minimax.minimax import minimax, opponent_move
-from t2.jogo import result
-from t2.treinamento import evaluate, play
+from t2.apoio.jogo import result
+from t2.apoio.treinamento import evaluate, play
 from t2.algoritmos.genetico.genetico import crossover
 from t2.app import app
 

@@ -15,12 +15,10 @@ Trabalhos da disciplina de Inteligência Artificial da PUCRS. Cada trabalho tem 
 | `t1/dataset/` | Dados de treinamento, validação e teste do T1 |
 | `t1/front_end/` | Interface do T1 |
 | `t1/relatorio/` | Relatório do T1 |
-| `t2/algoritmos/` | MLP, Minimax e genético, cada um com seu notebook e arquivo Python |
+| `t2/algoritmos/` | MLP, Minimax e genético, cada um com código, notebook, gráficos PNG e tabelas CSV |
 | `t2/front_end/` | Interface do T2 |
-| `t2/resultados/` | Rede treinada e avaliação do experimento |
 | `t2/relatorio/` | Relatório do T2 |
-| `t2/tests/` | Testes da lógica e da API |
-| `t2/scripts/` | Verificação automática da interface |
+| `t2/apoio/` | Regras do jogo, avaliação das redes, treino pelo terminal e testes |
 
 ## Abrir os jogos
 
@@ -49,7 +47,7 @@ python3 -m pip install -r t2/requirements.txt
 python3 -m t2.app
 ```
 
-Acesse http://127.0.0.1:5002. Para jogar com o experimento incluído, carregue `t2/resultados/rede-t2.json` na interface.
+Acesse http://127.0.0.1:5002. Para jogar com o experimento incluído, carregue `t2/algoritmos/genetico/rede-t2.json` na interface.
 
 ## Notebooks do T2
 
@@ -59,15 +57,15 @@ Acesse http://127.0.0.1:5002. Para jogar com o experimento incluído, carregue `
 | Minimax | [t2/algoritmos/minimax/minimax.ipynb](t2/algoritmos/minimax/minimax.ipynb) |
 | Genético | [t2/algoritmos/genetico/genetico.ipynb](t2/algoritmos/genetico/genetico.ipynb) |
 
-Instale as dependências com `python3 -m pip install -r t2/requirements-notebook.txt`. Abra o notebook no VS Code, escolha o kernel da `.venv` e execute as células na ordem. O treino completo fica no notebook do genético.
+Instale as dependências com `python3 -m pip install -r t2/apoio/requirements-notebook.txt`. Abra o notebook no VS Code, escolha o kernel da `.venv` e execute as células na ordem. O treino completo fica no notebook do genético. Os gráficos e as tabelas também são salvos como PNG e CSV na pasta de cada algoritmo, junto do notebook, como no T1.
 
 Os arquivos `.py` são os usados pelo jogo. Uma alteração nas células do notebook não modifica automaticamente o módulo Python correspondente.
 
 ## Treinamento e testes do T2
 
 ```bash
-python3 -m t2.train
-python3 -m unittest discover -s t2/tests -v
+python3 -m t2.apoio.train
+python3 -m unittest discover -s t2/apoio/tests -v
 ```
 
 A configuração inicial usa 80 indivíduos, topologia 9–9–9, 250 gerações e semente 42. Os valores, as recompensas e os resultados do experimento estão no [relatório do T2](t2/relatorio/relatorio_t2.md).

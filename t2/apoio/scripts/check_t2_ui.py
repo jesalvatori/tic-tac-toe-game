@@ -12,7 +12,7 @@ import time
 import urllib.request
 from playwright.sync_api import sync_playwright
 
-root=Path(__file__).resolve().parents[2]
+root=Path(__file__).resolve().parents[3]
 server=subprocess.Popen([sys.executable,'-m','t2.app'],cwd=root,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 try:
     for attempt in range(100):

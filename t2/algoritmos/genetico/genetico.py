@@ -5,7 +5,7 @@ A avaliação das partidas fica no arquivo de treinamento.
 from dataclasses import dataclass, asdict
 import numpy as np
 from t2.algoritmos.mlp.mlp import Network
-from t2.treinamento import REWARDS, evaluate
+from t2.apoio.treinamento import REWARDS, evaluate
 
 @dataclass
 class Config:

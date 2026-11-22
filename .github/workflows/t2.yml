@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r t2/requirements.txt playwright
-      - run: python -m unittest discover -s t2/tests -v
+      - run: python -m unittest discover -s t2/apoio/tests -v
       - run: node --check t2/front_end/script.js
       - run: python -m playwright install --with-deps chromium
-      - run: python t2/scripts/check_t2_ui.py
+      - run: python t2/apoio/scripts/check_t2_ui.py
