@@ -45,7 +45,7 @@ Se houver mais de uma ação com o mesmo melhor valor, ele joga na de menor índ
 
 No difícil, o adversário sempre chama o Minimax. Já no médio, a cada jogada ele sorteia entre usar Minimax (50%) e escolher uma casa livre aleatória (50%). Isso não significa que exatamente metade das jogadas de cada partida vai ser aleatória. É uma probabilidade aplicada em cada turno.
 
-Os primeiros 40% das gerações usam várias partidas no médio. Depois, a segunda fase continua com essas mesmas partidas e acrescenta duas no difícil: uma com a rede começando e outra com o Minimax começando.
+Os primeiros 40% do limite configurado de gerações usam várias partidas no médio. Depois, a segunda fase continua com essas mesmas partidas e acrescenta duas no difícil: uma com a rede começando e outra com o Minimax começando.
 
 No médio usamos uma quantidade par de partidas para equilibrar quem começa. As sementes são as mesmas para todos os indivíduos e ficam fixas entre as gerações da mesma fase. Isso ajuda a comparar as aptidões sem mudar os sorteios da avaliação de uma rede para outra.
 
@@ -73,11 +73,13 @@ Os indivíduos de elite são copiados para a próxima geração sem alteração.
 
 O filho é gerado com BLX-alpha:
 
-`filho_i = pai_i + beta_i*(mae_i-pai_i)`, com `beta_i ~ U(-alpha,1+alpha)`.
+`filho = pai + beta*(mae-pai)`, com `beta ~ U(-alpha,1+alpha)`.
 
-Na mutação, cada gene tem a probabilidade configurada de receber uma alteração. Essa alteração soma ruído normal `N(0,sigma)`, e o valor fica limitado a [-1,1]. O ciclo se repete até alcançar o limite de gerações ou a estagnação da melhor aptidão na segunda fase.
+Usamos o mesmo beta em todos os genes do filho, seguindo o exemplo das páginas 110–111 de `JAI-ag`. Se qualquer peso ficar fora de [-1,1], descartamos o filho e sorteamos outro beta até obter um filho válido. Não cortamos os valores nos limites.
 
-O BLX-alpha aparece na seção 3.2.2 do material `JAI-ag.pdf`, fornecido na disciplina. Como nossos genes são pesos contínuos, os operadores baseados em permutação não são adequados aqui. Para elitismo e torneio, seguimos as definições de `AlgoritmosGeneticos.pdf`.
+Na mutação gaussiana, cada gene tem a probabilidade configurada de ser substituído por um sorteio `N(peso_atual,sigma)`, conforme as páginas 114–115 de `JAI-ag`. Se o sorteio sair de [-1,1], repetimos até obter um valor válido. Aqui também não cortamos os valores nos limites. O ciclo se repete até alcançar o limite de gerações ou a estagnação da melhor aptidão na segunda fase.
+
+O BLX-alpha aparece na seção 3.2.2 do material `JAI-ag.pdf`, fornecido na disciplina, nas páginas 110–113 do texto (24–27 do PDF). Como nossos genes são pesos contínuos, os operadores baseados em permutação não são adequados aqui. Para elitismo e torneio, seguimos as definições de `AlgoritmosGeneticos.pdf`.
 
 A convergência usada para parar é a estabilidade no conjunto de treino. A rede parar de melhorar ali não significa, por si só, que ela já joga perfeitamente.
 
@@ -95,20 +97,20 @@ No difícil há duas partidas determinísticas, seguindo o desempate que definim
 
 ## Experimento incluído
 
-O experimento do projeto usou 80 indivíduos, H=9, 250 gerações, 24 partidas no médio, 2 elites, torneio de 2, mutação 0,08, sigma 0,20, alpha 0,5 e semente 42. Nesse caso, o treinamento terminou pelo limite de gerações.
+O experimento do projeto usou 80 indivíduos, H=9, limite de 250 gerações, 24 partidas no médio, 2 elites, torneio de 2, mutação 0,08, sigma 0,20, alpha 0,5 e semente 42. Nessa execução, o treinamento terminou na geração 164 por convergência: a melhor aptidão do conjunto de treino ficou 60 gerações sem melhorar na segunda fase.
 
 A comparação abaixo é entre a melhor rede da primeira geração e a melhor da última, usando o mesmo teste reservado. Vale lembrar o que estamos chamando de primeira geração: ela já escolhe a melhor entre 80 redes aleatórias. Portanto, não é a média do que uma rede aleatória qualquer faria.
 
 | Medida no médio (100 partidas) | Primeira geração | Última geração |
 | --- | ---: | ---: |
-| Vitórias | 34 | 64 |
-| Empates | 13 | 21 |
-| Derrotas | 53 | 15 |
-| Acurácia de decisões | 36,6% (122/333) | 77,9% (275/353) |
-| Escolhas válidas | 50,8% | 82,4% |
-| Escolhas ocupadas | 164 | 62 |
+| Vitórias | 34 | 49 |
+| Empates | 13 | 6 |
+| Derrotas | 53 | 45 |
+| Acurácia de decisões | 36,6% (122/333) | 56,4% (176/312) |
+| Escolhas válidas | 50,8% | 76,3% |
+| Escolhas ocupadas | 164 | 74 |
 
-No difícil, a rede final empatou as duas partidas. Ela teve 8/9 decisões ótimas (88,9%) e uma escolha ocupada, que foi corrigida pela recuperação explicada antes.
+No difícil, a rede final perdeu as duas partidas. Ela teve 3/5 decisões ótimas (60,0%) e nenhuma escolha ocupada. Nessas duas trajetórias, jogar em casas livres ainda não foi suficiente para evitar as derrotas.
 
 O resultado melhorou ao longo desse experimento, mas a rede ainda perde no médio e ainda escolhe casas ocupadas. Como usamos uma única semente, não dá para assumir que outros sorteios de treinamento vão produzir o mesmo comportamento. Para comparar melhor, seria preciso variar as sementes e o tamanho da camada oculta e olhar os resultados dessas execuções também.
 
@@ -167,3 +169,11 @@ Cada notebook pode ser executado por conta própria, sem depender de variáveis 
 Os valores iniciais do treinamento são os mesmos do experimento deste relatório. Se alterarmos a configuração e rodarmos outro treino, os resultados serão os daquela execução. Os arquivos do novo treino ficam em `t2/algoritmos/genetico/rede-notebook.json` e `t2/algoritmos/genetico/avaliacao-notebook.json`. Eles não substituem os arquivos que já acompanham o projeto. Para jogar com essa rede, abra a interface pelo Flask e use a opção de carregar rede.
 
 Os gráficos e as tabelas dos notebooks também ficam na própria pasta de cada algoritmo, em PNG e CSV, como no T1. A pasta `apoio/` reúne as regras, a avaliação e as ferramentas usadas por essas partes. Essa mudança de organização não altera os parâmetros, a função de aptidão nem os resultados apresentados neste relatório.
+
+## Relação com o enunciado
+
+O enunciado pede propagação da MLP sem backpropagation, cromossomos com os pesos da rede, população configurável, elitismo, torneio, cruzamento real, mutação, os dois modos do Minimax, alternância de quem começa, penalidades, acompanhamento da evolução e parada por gerações ou convergência. Essas partes estão implementadas.
+
+A função de aptidão, os parâmetros e a ordem dos modos de treino são escolhas que o enunciado deixa para o grupo. Por isso, os valores 80, 9, 250, as recompensas e o primeiro trecho de treino no médio, equivalente a 40% do limite de gerações são a configuração deste experimento, não números obrigatórios definidos pela professora.
+
+Além do programa e dos experimentos, a entrega pede um relatório em PowerPoint e um vídeo com todos os integrantes falando, sem narração por IA, além da apresentação em aula. Este arquivo Markdown e os notebooks ajudam a preparar essas entregas, mas não substituem o PowerPoint, o vídeo nem a apresentação.

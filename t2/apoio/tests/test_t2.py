@@ -9,7 +9,7 @@ from t2.algoritmos.mlp.mlp import Network
 from t2.algoritmos.minimax.minimax import minimax, opponent_move
 from t2.apoio.jogo import result
 from t2.apoio.treinamento import evaluate, play
-from t2.algoritmos.genetico.genetico import crossover
+from t2.algoritmos.genetico.genetico import crossover, mutate
 from t2.app import app
 
 class CoreTests(unittest.TestCase):
@@ -47,6 +47,30 @@ class CoreTests(unittest.TestCase):
         child=crossover(a,b,np.random.default_rng(2),.5)
         self.assertTrue(np.all(np.abs(child)<=1))
         self.assertTrue(np.any((child>-1)&(child<1)))
+
+    def test_crossover_redraws_an_invalid_child(self):
+        class Draws:
+            def __init__(self):
+                self.values = iter([1.25, .25])
+                self.calls = 0
+            def uniform(self, low, high):
+                self.calls += 1
+                return next(self.values)
+        rng = Draws()
+        a, b = np.array([-.8, .8]), np.array([.8, -.8])
+        child = crossover(a,b,rng,.5)
+        self.assertEqual(rng.calls,2)
+        np.testing.assert_allclose(child,[-.4,.4])
+
+    def test_mutation_redraws_without_clipping(self):
+        class Draws:
+            def __init__(self):self.values = iter([1.2,.9,-1.2,-.9])
+            def random(self,size):return np.zeros(size)
+            def normal(self,mean,sigma):return next(self.values)
+        weights = np.array([.8,-.8])
+        child = mutate(weights,Draws(),1.,.2)
+        np.testing.assert_allclose(child,[.9,-.9])
+        np.testing.assert_allclose(weights,[.8,-.8])
 
     def test_elitism_reproducibility_and_phase(self):
         c=Config(population=6,generations=5,medium_games=2,elite=2,patience=2)

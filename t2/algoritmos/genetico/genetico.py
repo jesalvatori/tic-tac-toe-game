@@ -38,10 +38,25 @@ class Config:
 
 
 def crossover(a, b, rng, alpha):
-    # Sorteamos um beta para cada peso, entre -alpha e 1+alpha.
-    # Assim o BLX-alpha pode criar valores diferentes dos pesos dos pais.
-    beta = rng.uniform(-alpha,1+alpha,len(a))
-    return np.clip(a + beta*(b-a), -1, 1)
+    # Usamos o mesmo beta no filho inteiro, como no exemplo do material.
+    # Se algum peso sair do intervalo, descartamos o filho e sorteamos de novo.
+    while True:
+        beta = rng.uniform(-alpha,1+alpha)
+        child = a + beta*(b-a)
+        if np.all((child >= -1) & (child <= 1)):
+            return child
+
+
+def mutate(weights, rng, rate, sigma):
+    child = weights.copy()
+    mask = rng.random(len(child)) < rate
+    for i in np.flatnonzero(mask):
+        # A normal fica centrada no peso atual. Repetimos o sorteio se sair dos limites.
+        value = rng.normal(child[i],sigma)
+        while not -1 <= value <= 1:
+            value = rng.normal(child[i],sigma)
+        child[i] = value
+    return child
 
 
 class Trainer:
@@ -77,9 +92,8 @@ class Trainer:
                 return parents[int(self.rng.choice(c.population,c.tournament,replace=False).min())]
             while len(next_population) < c.population:
                 child = crossover(tournament(),tournament(),self.rng,c.alpha)
-                mask = self.rng.random(len(child)) < c.mutation
-                child[mask] += self.rng.normal(0,c.sigma,int(mask.sum()))
-                next_population.append(np.clip(child,-1,1))
+                child = mutate(child,self.rng,c.mutation,c.sigma)
+                next_population.append(child)
             self.population = np.array(next_population)
         # Usamos as mesmas sementes para todos receberem os mesmos sorteios
         # no médio. Isso também permite repetir o treino.

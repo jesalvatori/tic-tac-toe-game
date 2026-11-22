@@ -28,7 +28,7 @@ Cada notebook tem as explicações, o código e as saídas do próprio algoritmo
 
 No genético, a linha tracejada marca a entrada do modo difícil no treino. A avaliação passa a incluir mais duas partidas nessa fase, então os resultados ao longo das gerações aparecem em percentuais. A diversidade é a média dos desvios padrão de cada gene na população; ela ajuda a ver se os indivíduos estão ficando parecidos.
 
-As comparações extras da MLP e do Minimax são demonstrações dos notebooks. Os resultados do experimento original continuam em `algoritmos/genetico/rede-t2.json` e `algoritmos/genetico/avaliacao.json`. Executar o notebook genético salva novos arquivos com o sufixo `-notebook`, sem sobrescrever esses dois.
+As comparações extras da MLP e do Minimax são demonstrações dos notebooks. Os resultados do experimento incluído ficam em `algoritmos/genetico/rede-t2.json` e `algoritmos/genetico/avaliacao.json`. Executar o notebook genético salva novos arquivos com o sufixo `-notebook`, sem sobrescrever esses dois.
 
 ## Organização como no T1
 
