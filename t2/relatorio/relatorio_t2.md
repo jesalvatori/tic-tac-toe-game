@@ -155,10 +155,12 @@ As pastas seguem a separação usada no T1: algoritmos, interface e relatório. 
 
 O T2 aprende jogando partidas contra o Minimax. Por isso não há uma pasta de dataset igual à do T1, que usava exemplos classificados em arquivos CSV.
 
-## Executar os experimentos no notebook
+## Executar os experimentos nos notebooks
 
-Também dá para acompanhar o trabalho pelo arquivo `t2/experimentos_t2.ipynb`, como nos experimentos do T1. Primeiro instale as dependências com `python3 -m pip install -r requirements-notebook-t2.txt`. No VS Code, abra o notebook e escolha o kernel do ambiente `.venv`.
+Cada algoritmo tem seu notebook na mesma pasta do arquivo Python: `t2/algoritmos/mlp/mlp.ipynb`, `t2/algoritmos/minimax/minimax.ipynb` e `t2/algoritmos/genetico/genetico.ipynb`. A organização segue o T1. Primeiro instale as dependências com `python3 -m pip install -r requirements-notebook-t2.txt`. No VS Code, abra o notebook e escolha o kernel do ambiente `.venv`.
 
-As células mostram o experimento salvo, os parâmetros, a implementação da rede e do cruzamento, a população inicial, o treino por gerações, os gráficos e o teste. A parte final permite acompanhar uma partida e salvar a rede. Os valores iniciais são os mesmos do experimento deste relatório. Se alterarmos a configuração e rodarmos outro treino, os resultados serão os daquela execução.
+O notebook da MLP define a rede e mostra a propagação de um tabuleiro, além de consultar os pesos já treinados. O do Minimax define a busca, os modos e executa exemplos de escolha e de partida. O do genético define a configuração e os operadores e acompanha o treinamento completo, com a população, os gráficos, o teste e a exportação.
 
-Os arquivos do novo treino ficam em `t2/resultados/rede-notebook.json` e `t2/resultados/avaliacao-notebook.json`. Eles não substituem os arquivos que já acompanham o projeto. Para jogar com essa rede, abra a interface pelo Flask e use a opção de carregar rede.
+Cada notebook pode ser executado por conta própria, sem depender de variáveis de outra sessão. Os arquivos `.py` são os usados pela interface. Se alterarmos o código de um notebook, essa alteração não muda automaticamente o módulo Python correspondente.
+
+Os valores iniciais do treinamento são os mesmos do experimento deste relatório. Se alterarmos a configuração e rodarmos outro treino, os resultados serão os daquela execução. Os arquivos do novo treino ficam em `t2/resultados/rede-notebook.json` e `t2/resultados/avaliacao-notebook.json`. Eles não substituem os arquivos que já acompanham o projeto. Para jogar com essa rede, abra a interface pelo Flask e use a opção de carregar rede.

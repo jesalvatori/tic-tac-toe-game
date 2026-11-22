@@ -91,17 +91,25 @@ Os demais parâmetros ficam em **Configurações avançadas**. **Pausar** conclu
 
 Para usar o experimento incluído, clique em **Carregar rede** e selecione [t2/resultados/rede-t2.json](t2/resultados/rede-t2.json). Para guardar um novo treinamento, clique em **Salvar rede**. Os pesos ficam na memória do servidor até serem exportados.
 
-### Experimentos no notebook
+### Notebooks por algoritmo
 
-O arquivo [t2/experimentos_t2.ipynb](t2/experimentos_t2.ipynb) permite acompanhar os experimentos por células, como no T1. Ele mostra os resultados já salvos e permite configurar uma nova população, treinar, visualizar os gráficos e inspecionar uma partida.
+Cada algoritmo do T2 tem seu notebook na própria pasta, como no T1:
+
+| Algoritmo | Notebook |
+| --- | --- |
+| MLP | [t2/algoritmos/mlp/mlp.ipynb](t2/algoritmos/mlp/mlp.ipynb) |
+| Minimax | [t2/algoritmos/minimax/minimax.ipynb](t2/algoritmos/minimax/minimax.ipynb) |
+| Algoritmo genético | [t2/algoritmos/genetico/genetico.ipynb](t2/algoritmos/genetico/genetico.ipynb) |
 
 ```bash
 python3 -m pip install -r requirements-notebook-t2.txt
 ```
 
-Abra o notebook no VS Code, selecione o kernel da `.venv` e execute as células na ordem. Para abrir pelo Jupyter, execute `jupyter notebook t2/experimentos_t2.ipynb`.
+Abra o notebook no VS Code, selecione o kernel da `.venv` e execute as células na ordem. A sugestão de leitura é MLP, Minimax e depois genético. Os notebooks não dependem de variáveis de outra sessão.
 
-O notebook usa os mesmos módulos da interface. Os novos arquivos são salvos como `t2/resultados/rede-notebook.json` e `t2/resultados/avaliacao-notebook.json`, preservando o experimento incluído. O jogo continua abrindo com `python3 app_t2.py`.
+A implementação de cada algoritmo aparece em células de código. Os arquivos `.py` continuam sendo usados pela interface, então uma alteração nas células não modifica automaticamente o jogo.
+
+O notebook do genético reúne o treinamento completo e os gráficos. A exportação gera `t2/resultados/rede-notebook.json` e `t2/resultados/avaliacao-notebook.json`, preservando o experimento incluído. O jogo continua abrindo com `python3 app_t2.py`.
 
 ### Aptidão e métricas
 
@@ -152,7 +160,7 @@ O primeiro comando executa o experimento e grava os arquivos em `t2/resultados/`
 | `t2/relatorio/relatorio_t2.md` | Relatório do T2 |
 | `t2/front_end/` | Interface do T2 |
 | `t2/train.py` | Treinamento pela linha de comando |
-| `t2/experimentos_t2.ipynb` | Experimentos por células e gráficos |
+| `t2/algoritmos/*/*.ipynb` | Notebook de cada algoritmo |
 | `t2/resultados/` | Rede e resultados do experimento |
 | `tests/test_t2.py` | Testes da lógica e API do T2 |
 
