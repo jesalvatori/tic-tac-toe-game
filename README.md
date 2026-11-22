@@ -91,6 +91,18 @@ Os demais parâmetros ficam em **Configurações avançadas**. **Pausar** conclu
 
 Para usar o experimento incluído, clique em **Carregar rede** e selecione [t2/resultados/rede-t2.json](t2/resultados/rede-t2.json). Para guardar um novo treinamento, clique em **Salvar rede**. Os pesos ficam na memória do servidor até serem exportados.
 
+### Experimentos no notebook
+
+O arquivo [t2/experimentos_t2.ipynb](t2/experimentos_t2.ipynb) permite acompanhar os experimentos por células, como no T1. Ele mostra os resultados já salvos e permite configurar uma nova população, treinar, visualizar os gráficos e inspecionar uma partida.
+
+```bash
+python3 -m pip install -r requirements-notebook-t2.txt
+```
+
+Abra o notebook no VS Code, selecione o kernel da `.venv` e execute as células na ordem. Para abrir pelo Jupyter, execute `jupyter notebook t2/experimentos_t2.ipynb`.
+
+O notebook usa os mesmos módulos da interface. Os novos arquivos são salvos como `t2/resultados/rede-notebook.json` e `t2/resultados/avaliacao-notebook.json`, preservando o experimento incluído. O jogo continua abrindo com `python3 app_t2.py`.
+
 ### Aptidão e métricas
 
 A função de aptidão usa +3 por vitória, +1 por empate, −3 por derrota e −2 por escolha de casa ocupada. A soma é dividida pelo número de partidas.
@@ -140,6 +152,7 @@ O primeiro comando executa o experimento e grava os arquivos em `t2/resultados/`
 | `t2/relatorio/relatorio_t2.md` | Relatório do T2 |
 | `t2/front_end/` | Interface do T2 |
 | `t2/train.py` | Treinamento pela linha de comando |
+| `t2/experimentos_t2.ipynb` | Experimentos por células e gráficos |
 | `t2/resultados/` | Rede e resultados do experimento |
 | `tests/test_t2.py` | Testes da lógica e API do T2 |
 
