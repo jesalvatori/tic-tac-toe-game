@@ -18,7 +18,17 @@ app = Flask(__name__, static_folder=str(ROOT/'front_end'), static_url_path='')
 app.config['MAX_CONTENT_LENGTH'] = 1024*1024
 lock = Lock()
 trainer = None
-loaded = None
+
+def network_from_data(p):
+    if not isinstance(p,dict) or p.get('version') != 1 or type(p.get('hidden')) is not int or not 1 <= p['hidden'] <= 64:
+        raise ValueError('Arquivo de rede inválido.')
+    net = Network(p.get('weights'),p['hidden'])
+    if np.any(np.abs(net.weights)>1):
+        raise ValueError('Pesos devem estar entre -1 e 1.')
+    return net
+
+# Já abre com os pesos do experimento salvo, sem precisar escolher um arquivo.
+loaded = network_from_data(json.loads((ROOT/'algoritmos/genetico/rede-t2.json').read_text(encoding='utf-8')))
 
 @app.errorhandler(ValueError)
 def bad_input(error):
@@ -59,7 +69,10 @@ def step():
 @app.get('/api/state')
 def state():
     with lock:
-        return jsonify(trainer.state() if trainer else {})
+        data = trainer.state() if trainer else {}
+        net = trainer.best if trainer and trainer.best else loaded
+        data['network'] = dict(hidden=net.hidden,parameters=len(net.weights)) if net else None
+        return jsonify(data)
 
 @app.post('/api/evaluate')
 def test():
@@ -122,12 +135,7 @@ def export():
 @app.post('/api/import')
 def import_model():
     global loaded, trainer
-    p = request.get_json()
-    if not isinstance(p,dict) or p.get('version') != 1 or type(p.get('hidden')) is not int or not 1 <= p['hidden'] <= 64:
-        raise ValueError('Arquivo de rede inválido.')
-    net = Network(p.get('weights'),p['hidden'])
-    if np.any(np.abs(net.weights)>1):
-        raise ValueError('Pesos devem estar entre -1 e 1.')
+    net = network_from_data(request.get_json())
     with lock:
         loaded, trainer = net, None
     return jsonify(parameters=len(net.weights),hidden=net.hidden)

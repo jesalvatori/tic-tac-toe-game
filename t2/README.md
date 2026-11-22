@@ -44,3 +44,5 @@ Cada pasta de algoritmo reúne o notebook, o arquivo Python e as saídas do expe
 | `apoio/` | Regras, avaliação, treino pelo terminal, testes e dependências dos notebooks |
 
 O comando para abrir o jogo continua sendo `python3 -m t2.app`, executado na raiz do repositório. Para a apresentação dos algoritmos, abra os três notebooks em `algoritmos/`.
+
+Ao iniciar o servidor, a rede de `algoritmos/genetico/rede-t2.json` já fica carregada e o adversário selecionado é **Rede treinada**. Não precisa escolher arquivo para começar. Use **Carregar rede** apenas quando quiser testar outros pesos.

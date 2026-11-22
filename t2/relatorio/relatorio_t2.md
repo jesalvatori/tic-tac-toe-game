@@ -14,7 +14,7 @@ python3 -m t2.app
 
 Depois é só acessar http://127.0.0.1:5002 no navegador. O T1 continua no `t1/app.py`, com as dependências que já usava. No T2 a rede é outra: esse módulo não importa os classificadores, os datasets nem a MLP do T1.
 
-Para jogar com a rede do experimento que já está no projeto, carregue `t2/algoritmos/genetico/rede-t2.json` pela interface. Também dá para começar uma população e acompanhar o treino, avançando uma geração de cada vez ou deixando executar automaticamente. Ao pedir para pausar, a geração que está rodando termina primeiro.
+A rede do experimento, em `t2/algoritmos/genetico/rede-t2.json`, é carregada automaticamente ao iniciar o servidor. O jogo já começa com **Rede treinada** selecionada. A opção de carregar arquivo continua disponível para testar outra rede. Também dá para começar uma população e acompanhar o treino, avançando uma geração de cada vez ou deixando executar automaticamente. Ao pedir para pausar, a geração que está rodando termina primeiro.
 
 A rede fica na memória do servidor. Para guardar os pesos, é preciso exportar o JSON. Outra coisa: o servidor é local e as abas compartilham a mesma sessão de treinamento. Abrir outra aba não cria um treino separado.
 
@@ -131,7 +131,7 @@ Na demonstração, podemos começar mostrando as configurações e explicando de
 
 Com um indivíduo escolhido, avançamos a partida jogada por jogada. Nessa parte dá para mostrar a escolha original da rede, a ação que o programa executou e a penalidade, quando houver uma escolha inválida.
 
-Depois carregamos a rede do experimento e jogamos contra ela, alternando quem começa. Por fim, executamos a avaliação reservada e comentamos os resultados, incluindo os erros que a rede ainda comete.
+Depois jogamos contra a rede do experimento, que já é carregada ao abrir o servidor, alternando quem começa. Por fim, executamos a avaliação reservada e comentamos os resultados, incluindo os erros que a rede ainda comete.
 
 O PPT precisa explicar o objetivo, a topologia, a representação, a aptidão, os operadores, a sequência do treinamento, os resultados e as considerações finais. Cada integrante precisa entender a sua parte e aparecer no vídeo falando. A gravação e a apresentação em aula ficam com o grupo.
 

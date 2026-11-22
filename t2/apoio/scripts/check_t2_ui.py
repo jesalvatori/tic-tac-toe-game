@@ -28,6 +28,13 @@ try:
         errors=[]
         page.on('pageerror',lambda e:errors.append(str(e)))
         page.goto('http://127.0.0.1:5002')
+        page.wait_for_function("!document.querySelector('#evaluate').disabled")
+        assert page.locator('#mode').input_value()=='rede'
+        assert 'Rede carregada' in page.locator('#phase').inner_text()
+        page.locator('.cell').nth(0).click()
+        page.wait_for_function("document.querySelectorAll('.cell:not(:empty)').length===2")
+        page.reload()
+        page.wait_for_function("!document.querySelector('#evaluate').disabled")
         page.locator('#train-panel > summary').click()
         page.locator('[name=population]').fill('6')
         page.locator('[name=generations]').fill('4')

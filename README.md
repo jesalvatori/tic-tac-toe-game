@@ -47,7 +47,7 @@ python3 -m pip install -r t2/requirements.txt
 python3 -m t2.app
 ```
 
-Acesse http://127.0.0.1:5002. Para jogar com o experimento incluído, carregue `t2/algoritmos/genetico/rede-t2.json` na interface.
+Acesse http://127.0.0.1:5002. O jogo já abre com a rede treinada de `t2/algoritmos/genetico/rede-t2.json`, sem selecionar arquivo. A opção **Carregar rede** serve para testar outra rede.
 
 ## Notebooks do T2
 

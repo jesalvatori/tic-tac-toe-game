@@ -1,4 +1,8 @@
 import unittest
+import subprocess
+import sys
+import json
+from pathlib import Path
 import numpy as np
 from t2.algoritmos.genetico.genetico import Config, Trainer
 from t2.algoritmos.mlp.mlp import Network
@@ -65,6 +69,27 @@ class CoreTests(unittest.TestCase):
 
 class APITests(unittest.TestCase):
     def setUp(self):self.client=app.test_client()
+    def test_automatic_network_on_startup(self):
+        root = Path(__file__).resolve().parents[3]
+        code = """
+import json
+from t2.app import app
+client = app.test_client()
+print(json.dumps({
+    'state': client.get('/api/state').json,
+    'export': client.get('/api/export').json,
+    'first': client.post('/api/move', json={'board': [0]*9, 'mode': 'rede'}).json,
+    'second': client.post('/api/move', json={'board': [1]+[0]*8, 'mode': 'rede'}).json,
+}))
+"""
+        result = subprocess.run([sys.executable, '-c', code], cwd=root, capture_output=True, text=True, check=True)
+        data = json.loads(result.stdout)
+        saved = json.loads((root/'t2/algoritmos/genetico/rede-t2.json').read_text())
+        self.assertEqual(data['export']['weights'], saved['weights'])
+        self.assertEqual(data['state']['network'], {'hidden': saved['hidden'], 'parameters': len(saved['weights'])})
+        self.assertIn(data['first']['move'], range(9))
+        self.assertIn(data['second']['move'], range(1,9))
+
     def test_train_play_export_import(self):
         with self.client.get('/') as response:
             self.assertEqual(response.status_code,200)
