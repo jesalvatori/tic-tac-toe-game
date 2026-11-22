@@ -2,7 +2,7 @@
 Servidor usado para abrir o jogo e o treinamento do T2.
 
 Ele fica separado do servidor do T1. Para iniciar esta parte do projeto,
-o comando é python app_t2.py.
+o comando, na raiz do repositório, é python -m t2.app.
 """
 from pathlib import Path
 from threading import Lock
@@ -16,7 +16,7 @@ from t2.jogo import result
 from t2.treinamento import evaluate, play
 
 ROOT = Path(__file__).resolve().parent
-app = Flask(__name__, static_folder=str(ROOT/'t2/front_end'), static_url_path='')
+app = Flask(__name__, static_folder=str(ROOT/'front_end'), static_url_path='')
 app.config['MAX_CONTENT_LENGTH'] = 1024*1024
 lock = Lock()
 trainer = None

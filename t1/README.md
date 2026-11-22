@@ -2,6 +2,8 @@
 
 Trabalho desenvolvido para a disciplina de **Inteligência Artificial**, do curso de Sistemas de Informação da PUCRS.
 
+Os comandos de execução abaixo partem da raiz do repositório. O código deste trabalho está todo dentro de `t1/`.
+
 ## 1. Objetivo
 
 Desenvolver, avaliar e integrar algoritmos de aprendizado de máquina capazes de classificar o estado de um tabuleiro de Jogo da Velha em quatro categorias:
@@ -208,7 +210,7 @@ O projeto está organizado nas seguintes pastas e arquivos principais:
 - **`relatorio/`**
   - `relatorio_t1.md`: relatório dos experimentos e resultados.
 - **`app.py`**: servidor Flask e integração dos classificadores.
-- **`README.md`**: documentação do projeto.
+- **`README.md`**: documentação do T1.
 - **`.gitignore`**: arquivos e diretórios ignorados pelo Git.
 
 ## 7. Como executar o projeto
@@ -259,7 +261,7 @@ Ativar:
 
 Execute:
 
-`python -m pip install flask pandas scikit-learn joblib matplotlib jupyter`
+`python -m pip install -r t1/requirements.txt`
 
 ### 7.5. Gerar os dados das abordagens (opcional)
 
@@ -267,15 +269,15 @@ Os arquivos processados já estão disponíveis no projeto.
 
 Caso seja necessário gerá-los novamente, execute:
 
-`python dataset/abordagem_1/preparar_a1.py`
+`python t1/dataset/abordagem_1/preparar_a1.py`
 
-`python dataset/abordagem_2/preparar_a2.py`
+`python t1/dataset/abordagem_2/preparar_a2.py`
 
 ### 7.6. Iniciar o servidor Flask
 
 Na pasta raiz do projeto, execute:
 
-`python app.py`
+`python -m t1.app`
 
 Aguarde o carregamento dos cinco modelos.
 

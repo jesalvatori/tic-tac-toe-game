@@ -8,11 +8,11 @@ Para abrir o projeto, o terminal precisa estar na pasta do repositório. Os coma
 git switch t2-rede-genetica
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install -r requirements-t2.txt
-python3 app_t2.py
+python3 -m pip install -r t2/requirements.txt
+python3 -m t2.app
 ```
 
-Depois é só acessar http://127.0.0.1:5002 no navegador. O T1 continua no `app.py`, com as dependências que já usava. No T2 a rede é outra: esse módulo não importa os classificadores, os datasets nem a MLP do T1.
+Depois é só acessar http://127.0.0.1:5002 no navegador. O T1 continua no `t1/app.py`, com as dependências que já usava. No T2 a rede é outra: esse módulo não importa os classificadores, os datasets nem a MLP do T1.
 
 Para jogar com a rede do experimento que já está no projeto, carregue `t2/resultados/rede-t2.json` pela interface. Também dá para começar uma população e acompanhar o treino, avançando uma geração de cada vez ou deixando executar automaticamente. Ao pedir para pausar, a geração que está rodando termina primeiro.
 
@@ -118,7 +118,7 @@ Para repetir a execução:
 
 ```bash
 python3 -m t2.train
-python3 -m unittest discover -s tests -v
+python3 -m unittest discover -s t2/tests -v
 ```
 
 O `train` grava a rede e as métricas em `t2/resultados`. No JSON da rede também vai o histórico de cada geração, para consultar a evolução depois.
@@ -139,7 +139,7 @@ A professora indicou este vídeo: https://www.youtube.com/watch?v=P7XHzqZjXQs (I
 
 ## Organização dos arquivos
 
-As pastas seguem a separação usada no T1: algoritmos, interface e relatório. Todos os arquivos desta parte ficam dentro de `t2/`, e o servidor continua sendo iniciado pelo `app_t2.py` na raiz do repositório.
+As pastas seguem a separação usada no T1: algoritmos, interface e relatório. Todos os arquivos desta parte ficam dentro de `t2/`, e o servidor continua sendo iniciado com `python3 -m t2.app` na raiz do repositório.
 
 | Arquivo ou pasta | O que fica ali |
 | --- | --- |
@@ -157,7 +157,7 @@ O T2 aprende jogando partidas contra o Minimax. Por isso não há uma pasta de d
 
 ## Executar os experimentos nos notebooks
 
-Cada algoritmo tem seu notebook na mesma pasta do arquivo Python: `t2/algoritmos/mlp/mlp.ipynb`, `t2/algoritmos/minimax/minimax.ipynb` e `t2/algoritmos/genetico/genetico.ipynb`. A organização segue o T1. Primeiro instale as dependências com `python3 -m pip install -r requirements-notebook-t2.txt`. No VS Code, abra o notebook e escolha o kernel do ambiente `.venv`.
+Cada algoritmo tem seu notebook na mesma pasta do arquivo Python: `t2/algoritmos/mlp/mlp.ipynb`, `t2/algoritmos/minimax/minimax.ipynb` e `t2/algoritmos/genetico/genetico.ipynb`. A organização segue o T1. Primeiro instale as dependências com `python3 -m pip install -r t2/requirements-notebook.txt`. No VS Code, abra o notebook e escolha o kernel do ambiente `.venv`.
 
 O notebook da MLP define a rede e mostra a propagação de um tabuleiro, além de consultar os pesos já treinados. O do Minimax define a busca, os modos e executa exemplos de escolha e de partida. O do genético define a configuração e os operadores e acompanha o treinamento completo, com a população, os gráficos, o teste e a exportação.
 

@@ -12,8 +12,8 @@ import time
 import urllib.request
 from playwright.sync_api import sync_playwright
 
-root=Path(__file__).resolve().parents[1]
-server=subprocess.Popen([sys.executable,'app_t2.py'],cwd=root,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+root=Path(__file__).resolve().parents[2]
+server=subprocess.Popen([sys.executable,'-m','t2.app'],cwd=root,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 try:
     for attempt in range(100):
         try:

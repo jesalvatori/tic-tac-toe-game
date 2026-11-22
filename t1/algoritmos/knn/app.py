@@ -4,11 +4,11 @@ from pathlib import Path
 import pandas as pd
 from flask import Flask, jsonify, request, send_from_directory
 
-from algoritmos.knn.knn import criar_modelo
-from dataset.abordagem_2.preparar_a2 import extrair_caracteristicas
+from t1.algoritmos.knn.knn import criar_modelo
+from t1.dataset.abordagem_2.preparar_a2 import extrair_caracteristicas
 
 
-RAIZ = Path(__file__).resolve().parent
+RAIZ = Path(__file__).resolve().parents[2]
 
 app = Flask(
     __name__,

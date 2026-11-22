@@ -1,10 +1,10 @@
 name: T2 tests
 on:
   pull_request:
-    paths: ['app_t2.py', 't2/**', 'tests/**', 'scripts/check_t2_ui.py', 'requirements-t2.txt', '.github/workflows/t2.yml']
+    paths: ['t2/**', '.github/workflows/t2.yml']
   push:
     branches: ['t2-rede-genetica']
-    paths: ['app_t2.py', 't2/**', 'tests/**', 'scripts/check_t2_ui.py', 'requirements-t2.txt', '.github/workflows/t2.yml']
+    paths: ['t2/**', '.github/workflows/t2.yml']
 permissions:
   contents: read
 jobs:
@@ -15,8 +15,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -r requirements-t2.txt playwright
-      - run: python -m unittest discover -s tests -v
+      - run: python -m pip install -r t2/requirements.txt playwright
+      - run: python -m unittest discover -s t2/tests -v
       - run: node --check t2/front_end/script.js
       - run: python -m playwright install --with-deps chromium
-      - run: python scripts/check_t2_ui.py
+      - run: python t2/scripts/check_t2_ui.py

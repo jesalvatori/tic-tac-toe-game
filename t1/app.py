@@ -11,8 +11,8 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from algoritmos.knn.knn import criar_modelo
-from dataset.abordagem_2.preparar_a2 import extrair_caracteristicas
+from t1.algoritmos.knn.knn import criar_modelo
+from t1.dataset.abordagem_2.preparar_a2 import extrair_caracteristicas
 
 
 # ==================================================

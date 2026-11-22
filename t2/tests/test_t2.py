@@ -6,7 +6,7 @@ from t2.algoritmos.minimax.minimax import minimax, opponent_move
 from t2.jogo import result
 from t2.treinamento import evaluate, play
 from t2.algoritmos.genetico.genetico import crossover
-from app_t2 import app
+from t2.app import app
 
 class CoreTests(unittest.TestCase):
     def test_minimax_never_loses_all_opponent_paths(self):
