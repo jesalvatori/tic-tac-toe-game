@@ -1,0 +1,73 @@
+{
+  "config": {
+    "population": 80,
+    "hidden": 9,
+    "generations": 250,
+    "medium_games": 24,
+    "elite": 2,
+    "tournament": 2,
+    "mutation": 0.08,
+    "sigma": 0.2,
+    "alpha": 0.5,
+    "patience": 60,
+    "seed": 42
+  },
+  "generations": 164,
+  "stop": "Convergência: aptidão estável no conjunto de treino",
+  "baseline": {
+    "medium": {
+      "vitoria": 34,
+      "empate": 13,
+      "derrota": 53,
+      "invalid": 164,
+      "decisions": 333,
+      "correct": 122,
+      "score": -372.0,
+      "games": 100,
+      "fitness": -3.72,
+      "valid_rate": 0.5075075075075075,
+      "accuracy": 0.3663663663663664
+    },
+    "hard": {
+      "vitoria": 0,
+      "empate": 0,
+      "derrota": 2,
+      "invalid": 2,
+      "decisions": 5,
+      "correct": 2,
+      "score": -10.0,
+      "games": 2,
+      "fitness": -5.0,
+      "valid_rate": 0.6,
+      "accuracy": 0.4
+    }
+  },
+  "final": {
+    "medium": {
+      "vitoria": 49,
+      "empate": 6,
+      "derrota": 45,
+      "invalid": 74,
+      "decisions": 312,
+      "correct": 176,
+      "score": -130.0,
+      "games": 100,
+      "fitness": -1.3,
+      "valid_rate": 0.7628205128205128,
+      "accuracy": 0.5641025641025641
+    },
+    "hard": {
+      "vitoria": 0,
+      "empate": 0,
+      "derrota": 2,
+      "invalid": 0,
+      "decisions": 5,
+      "correct": 3,
+      "score": -6.0,
+      "games": 2,
+      "fitness": -3.0,
+      "valid_rate": 1.0,
+      "accuracy": 0.6
+    }
+  }
+}

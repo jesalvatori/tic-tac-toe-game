@@ -1,0 +1,4 @@
+rede,modo,vitoria,empate,derrota,invalid,decisions,correct,score,games,fitness,valid_rate,accuracy
+Treinada,Médio,49,6,45,74,312,176,-130.0,100,-1.3,0.7628205128205128,0.5641025641025641
+Treinada,Difícil,0,0,2,0,5,3,-6.0,2,-3.0,1.0,0.6
+Aleatória,Médio,17,18,65,218,366,85,-562.0,100,-5.62,0.40437158469945356,0.23224043715846995
