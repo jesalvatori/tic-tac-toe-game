@@ -1,4 +1,9 @@
-"""Treino reprodutível sem interface: python -m t2.train."""
+"""
+Executa o treinamento pelo terminal, sem precisar abrir a interface.
+
+Com python -m t2.train conseguimos repetir o treino com a configuração
+definida e guardar a rede junto dos resultados.
+"""
 import argparse
 import json
 from pathlib import Path

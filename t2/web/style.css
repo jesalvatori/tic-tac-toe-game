@@ -1,6 +1,6 @@
 
 /* =====================================
-   CONFIGURAÇÕES GERAIS
+   Estilos que valem para a página toda
 ===================================== */
 
 * {
@@ -29,7 +29,7 @@ body {
 
 
 /* =====================================
-   CONTAINER PRINCIPAL
+   Painel branco onde fica o jogo
 ===================================== */
 
 .container {
@@ -47,7 +47,7 @@ body {
 
 
 /* =====================================
-   CABEÇALHO
+   Título e identificação do trabalho
 ===================================== */
 
 .cabecalho {
@@ -76,7 +76,7 @@ h1 {
 
 
 /* =====================================
-   SELEÇÃO DO ALGORITMO
+   Área de seleção usada na interface
 ===================================== */
 
 .selecao {
@@ -113,7 +113,7 @@ h1 {
 
 
 /* =====================================
-   JOGADORES
+   Identificação dos jogadores e dos símbolos
 ===================================== */
 
 .jogadores {
@@ -176,7 +176,7 @@ h1 {
 
 
 /* =====================================
-   MENSAGEM DA PARTIDA
+   Mensagem que acompanha o andamento da partida
 ===================================== */
 
 #mensagem {
@@ -190,7 +190,7 @@ h1 {
 
 
 /* =====================================
-   TABULEIRO
+   Casas e organização do tabuleiro
 ===================================== */
 
 .tabuleiro {
@@ -241,7 +241,7 @@ h1 {
 
 
 /* =====================================
-   CLASSIFICAÇÃO DA IA
+   Área de informações da rede no estilo da interface anterior
 ===================================== */
 
 .classificacao {
@@ -290,7 +290,7 @@ h1 {
 
 
 /* =====================================
-   PLACARES
+   Contagens mostradas abaixo do jogo
 ===================================== */
 
 .placar {
@@ -324,7 +324,7 @@ h1 {
 
 
 /* =====================================
-   BOTÃO NOVA PARTIDA
+   Botão para começar outra partida
 ===================================== */
 
 .botao-reiniciar {
@@ -349,7 +349,7 @@ h1 {
 
 
 /* =====================================
-   AJUSTE PARA TELAS MAIS BAIXAS
+   Diminuímos os espaços quando a tela tem menos altura
 ===================================== */
 
 @media (max-height: 800px) {
@@ -433,7 +433,7 @@ h1 {
 
 
 /* =====================================
-   TELAS MUITO BAIXAS
+   Ajustes para quando a altura disponível é ainda menor
 ===================================== */
 
 @media (max-height: 650px) {
@@ -470,7 +470,7 @@ h1 {
 
 
 /* =====================================
-   CELULARES
+   Ajustes para a largura do celular
 ===================================== */
 
 @media (max-width: 420px) {
@@ -497,7 +497,8 @@ h1 {
     }
 }
 
-/* Controles do T2. A base visual acima é a mesma do T1. */
+/* A partir daqui ficam os controles acrescentados para o T2.
+   Mantivemos a base do T1 acima para o jogo continuar com o mesmo visual. */
 body { align-items: flex-start; }
 .container { margin: 12px 0; }
 .layout { display: block; }

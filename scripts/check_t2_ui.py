@@ -1,4 +1,9 @@
-"""Smoke test da interface. Requer: pip install playwright; playwright install chromium."""
+"""
+Confere os principais passos da interface usando um navegador automatizado.
+
+Para executar, é preciso instalar o Playwright e o Chromium com os comandos
+pip install playwright e playwright install chromium.
+"""
 import os
 from pathlib import Path
 import subprocess

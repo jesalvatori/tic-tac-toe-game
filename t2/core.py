@@ -1,4 +1,9 @@
-"""Jogo, MLP com propagação direta e neuroevolução. Sem backpropagation."""
+"""
+Neste arquivo ficam as regras do jogo, a rede e o algoritmo genético.
+
+A MLP faz a propagação direta para escolher uma posição. Quem modifica
+os pesos durante o treino é o AG, sem usar backpropagation.
+"""
 from dataclasses import dataclass, asdict
 from functools import lru_cache
 import numpy as np
@@ -13,7 +18,12 @@ def result(board):
 
 @lru_cache(maxsize=None)
 def minimax(board, player):
-    """Valor na perspectiva de quem joga. Empate entre ações: menor índice."""
+    """
+    Avalia o tabuleiro do ponto de vista do jogador que está na vez.
+
+    Quando mais de uma ação tem o mesmo melhor valor, o desempate usado
+    para jogar é pelo menor índice. Assim a escolha não depende de sorteio.
+    """
     end = result(board)
     if end is not None:
         return end * player, ()
@@ -34,7 +44,12 @@ def opponent_move(board, player, mode, rng):
     return minimax(tuple(board), player)[1][0]
 
 class Network:
-    """9 entradas -> H tanh -> 9 saídas lineares. Bias nas duas camadas."""
+    """
+    A rede recebe 9 entradas e passa por H neurônios ocultos com tanh.
+
+    No final temos 9 saídas lineares, uma para cada casa. Tanto a camada
+    oculta quanto a de saída têm bias, que também entram no cromossomo.
+    """
     def __init__(self, weights, hidden=9):
         self.hidden = hidden
         self.weights = np.asarray(weights, dtype=float)
@@ -52,7 +67,9 @@ class Network:
         return 9*hidden + hidden + hidden*9 + 9
 
     def forward(self, board, player):
-        # Próprias peças = 1; adversário = -1; vazio = 0, para X e O.
+        # A entrada precisa ter o mesmo sentido quando a rede joga como X
+        # ou como O. Por isso a própria peça vale 1, a do adversário vale -1
+        # e a casa vazia continua valendo 0.
         inputs = np.asarray(board, dtype=float) * player
         activation = np.tanh(inputs @ self.w1 + self.b1)
         return activation @ self.w2 + self.b2
@@ -61,8 +78,10 @@ class Network:
         outputs = self.forward(board, player)
         ranking = np.argsort(-outputs, kind='stable')
         raw = int(ranking[0])
-        # Não escondemos o erro: penalizamos a primeira escolha ocupada.
-        # Para continuar a partida, usamos a próxima saída válida no ranking.
+        # Guardamos a primeira escolha mesmo se a casa estiver ocupada,
+        # porque é esse erro que vai receber a penalidade na avaliação.
+        # Para a partida não travar ali, procuramos a próxima casa livre
+        # na ordem das saídas da própria rede.
         move = next(int(i) for i in ranking if board[i] == 0)
         return raw, move, outputs.tolist()
 
@@ -144,7 +163,9 @@ class Config:
             raise ValueError('Use número par de partidas para equilibrar quem começa.')
 
 def crossover(a, b, rng, alpha):
-    # BLX-alpha: um beta por gene, amostrado em [-alpha, 1+alpha].
+    # No BLX-alpha, cada gene recebe seu próprio beta, sorteado no intervalo
+    # [-alpha, 1+alpha]. A combinação pode gerar um peso diferente dos dois
+    # pais, em vez de só copiar um dos valores que já existiam.
     beta = rng.uniform(-alpha,1+alpha,len(a))
     return np.clip(a + beta*(b-a), -1, 1)
 
@@ -167,7 +188,9 @@ class Trainer:
         c = self.config
         hard = self.generation >= max(1,int(c.generations*.4))
         phase = 'medio+dificil' if hard else 'medio'
-        # Aptidões de fases diferentes não são comparáveis.
+        # Quando entra o modo difícil, o conjunto de partidas da avaliação
+        # muda. Reiniciamos a comparação para não tratar a aptidão da fase
+        # anterior como se ela tivesse sido obtida nas mesmas condições.
         if phase != self.previous_phase:
             self.best_fitness, self.stagnant = float('-inf'), 0
             self.previous_phase = phase
@@ -175,7 +198,9 @@ class Trainer:
             parents = self.population
             next_population = [parents[i].copy() for i in range(c.elite)]
             def tournament():
-                # População ordenada por aptidão decrescente.
+                # A população já está ordenada da maior aptidão para a menor.
+                # Então o menor índice entre os sorteados é justamente o
+                # melhor candidato desse torneio.
                 return parents[int(self.rng.choice(c.population,c.tournament,replace=False).min())]
             while len(next_population) < c.population:
                 child = crossover(tournament(),tournament(),self.rng,c.alpha)
@@ -183,7 +208,9 @@ class Trainer:
                 child[mask] += self.rng.normal(0,c.sigma,int(mask.sum()))
                 next_population.append(np.clip(child,-1,1))
             self.population = np.array(next_population)
-        # Mesmas sementes para todos: comparação justa e fitness reprodutível.
+        # Todos os indivíduos são avaliados com as mesmas sementes. Assim,
+        # uma rede não ganha vantagem só por receber outros sorteios no modo
+        # médio, e conseguimos repetir a avaliação com a mesma configuração.
         results = [evaluate(Network(w,c.hidden),c.medium_games,hard,c.seed) for w in self.population]
         order = sorted(range(c.population),key=lambda i:results[i]['fitness'],reverse=True)
         self.population = self.population[order]

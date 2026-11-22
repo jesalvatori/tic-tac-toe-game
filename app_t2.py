@@ -1,4 +1,9 @@
-"""Servidor independente do T2. Execute: python app_t2.py."""
+"""
+Servidor usado para abrir o jogo e o treinamento do T2.
+
+Ele fica separado do servidor do T1. Para iniciar esta parte do projeto,
+o comando é python app_t2.py.
+"""
 from pathlib import Path
 from threading import Lock
 import json
@@ -58,7 +63,9 @@ def state():
 def test():
     with lock:
         net = model()
-        # Sementes reservadas, não usadas na seleção do AG.
+        # Aqui usamos as sementes separadas para o teste. Elas não entram
+        # na seleção do AG, então este resultado não escolhe os indivíduos
+        # que vão passar para a próxima geração.
         return jsonify(medium=evaluate(net,100,False,1000000,True),
                        hard=evaluate(net,0,True,2000000,True))
 
