@@ -1,3 +1,7 @@
+> **T2 disponível:** rede neural evoluída por algoritmo genético e Minimax.
+> Execute `python3 -m pip install -r requirements-t2.txt` e `python3 app_t2.py`.
+> Interface: http://127.0.0.1:5002. Instruções, resultados e decisões técnicas em [T2.md](T2.md).
+
 # T1 — Jogo da Velha com Inteligência Artificial
 
 Trabalho desenvolvido para a disciplina de **Inteligência Artificial**, do curso de Sistemas de Informação da PUCRS.

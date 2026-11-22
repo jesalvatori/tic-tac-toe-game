@@ -1,0 +1,73 @@
+{
+  "config": {
+    "population": 80,
+    "hidden": 9,
+    "generations": 250,
+    "medium_games": 24,
+    "elite": 2,
+    "tournament": 2,
+    "mutation": 0.08,
+    "sigma": 0.2,
+    "alpha": 0.5,
+    "patience": 60,
+    "seed": 42
+  },
+  "generations": 250,
+  "stop": "Limite de gerações",
+  "baseline": {
+    "medium": {
+      "vitoria": 34,
+      "empate": 13,
+      "derrota": 53,
+      "invalid": 164,
+      "decisions": 333,
+      "correct": 122,
+      "score": -372.0,
+      "games": 100,
+      "fitness": -3.72,
+      "valid_rate": 0.5075075075075075,
+      "accuracy": 0.3663663663663664
+    },
+    "hard": {
+      "vitoria": 0,
+      "empate": 0,
+      "derrota": 2,
+      "invalid": 2,
+      "decisions": 5,
+      "correct": 2,
+      "score": -10.0,
+      "games": 2,
+      "fitness": -5.0,
+      "valid_rate": 0.6,
+      "accuracy": 0.4
+    }
+  },
+  "final": {
+    "medium": {
+      "vitoria": 64,
+      "empate": 21,
+      "derrota": 15,
+      "invalid": 62,
+      "decisions": 353,
+      "correct": 275,
+      "score": 44.0,
+      "games": 100,
+      "fitness": 0.44,
+      "valid_rate": 0.8243626062322946,
+      "accuracy": 0.7790368271954674
+    },
+    "hard": {
+      "vitoria": 0,
+      "empate": 2,
+      "derrota": 0,
+      "invalid": 1,
+      "decisions": 9,
+      "correct": 8,
+      "score": 0.0,
+      "games": 2,
+      "fitness": 0.0,
+      "valid_rate": 0.8888888888888888,
+      "accuracy": 0.8888888888888888
+    }
+  }
+}
