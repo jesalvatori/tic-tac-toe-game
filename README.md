@@ -72,4 +72,4 @@ A configuração inicial usa 80 indivíduos, topologia 9–9–9, 250 gerações
 
 ## Apoio no desenvolvimento
 
-O projeto utilizou ChatGPT como apoio na compreensão dos conceitos, implementação, depuração, documentação e testes automatizados. A revisão da solução, a interpretação dos resultados e a apresentação fazem parte do trabalho dos integrantes do grupo.
+Durante o desenvolvimento do T1 e do T2, usamos o ChatGPT (OpenAI) como ferramenta de apoio para esclarecer conceitos dos algoritmos, ajudar na implementação e revisão de trechos de código e na correção de erros. Também utilizamos a ferramenta em dúvidas sobre a integração com a interface do jogo, a interpretação das métricas e dos gráficos e a organização da documentação. As decisões e os ajustes foram discutidos pelo grupo, que realizou os experimentos e conferiu os resultados e o funcionamento da aplicação.
