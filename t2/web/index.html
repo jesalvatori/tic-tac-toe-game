@@ -8,18 +8,14 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-<main>
-    <header>
-        <h1>Jogo da velha</h1>
-        <span>T2 · Inteligência Artificial</span>
-    </header>
-
-    <p id="notice" role="status" aria-live="polite">Escolha um adversário para jogar ou prepare o treino da rede.</p>
+<main class="container">
+    <header class="cabecalho"><span class="etiqueta">INTELIGÊNCIA ARTIFICIAL · T2</span><h1>Jogo da Velha</h1></header><p id="notice" role="status" aria-live="polite" class="status-modelo"></p>
 
     <div class="layout">
         <section class="game" aria-labelledby="play-title">
-            <h2 id="play-title">Jogar</h2>
-            <label for="mode">Adversário</label>
+            <h2 id="play-title" class="sr-only">Jogar</h2>
+            <div class="selecao">
+<label for="mode">Adversário</label>
             <select id="mode">
                 <option value="dificil">Minimax difícil</option>
                 <option value="medio">Minimax médio</option>
@@ -31,11 +27,33 @@
                 <option value="computer">Computador (X)</option>
             </select>
 
-            <p id="game-status" role="status" aria-live="polite">Sua vez · X</p>
-            <div id="board" class="board" role="group" aria-label="Tabuleiro do jogo da velha"></div>
-            <button id="new" class="new-game">Nova partida</button>
-            <p id="human-metrics" class="small">Acurácia da rede nesta sessão: —</p>
+            </div>
+<div class="jogadores">
+<div class="jogador">
+<span id="human-symbol" class="simbolo x">X</span><div>
+<strong>Você</strong><small id="human-player">Jogador X</small>
+</div>
+</div>
+<span class="versus">VS</span><div class="jogador">
+<span id="computer-symbol" class="simbolo o">O</span><div>
+<strong>Computador</strong><small id="opponent-name">Minimax difícil</small>
+</div>
+</div>
+</div>
+<p id="game-status" role="status" aria-live="polite">Sua vez · X</p>
+            <div id="board" class="board tabuleiro" role="group" aria-label="Tabuleiro do jogo da velha"></div>
+            <section class="classificacao"><h2>Rede neural</h2>
+<p id="human-metrics" class="observacao">Acurácia da rede: —</p>
 
+            </section><section class="placar" aria-label="Placar das partidas"><div>
+<strong id="wins-human">0</strong><span>Suas vitórias</span>
+</div>
+<div>
+<strong id="draws">0</strong><span>Empates</span>
+</div>
+<div>
+<strong id="wins-computer">0</strong><span>Vitórias do PC</span>
+</div></section><button id="new" class="new-game botao-reiniciar">Nova partida</button>
             <div class="actions file-actions">
                 <button id="load">Carregar rede</button>
                 <button id="export" disabled>Salvar rede</button>
@@ -43,7 +61,7 @@
             </div>
         </section>
 
-        <div class="training">
+        <details id="train-panel"><summary>Treinamento da rede</summary><div class="training">
             <section aria-labelledby="train-title">
                 <h2 id="train-title">Treinar a rede</h2>
                 <form id="config">
@@ -77,12 +95,15 @@
             <section class="results" aria-labelledby="results-title">
                 <h2 id="results-title">Evolução</h2>
                 <div id="metrics" class="metrics">
-                    <div>Geração<strong>0</strong></div>
-                    <div>Melhor aptidão<strong>—</strong></div>
-                    <div>Escolhas válidas<strong>—</strong></div>
+                    <div>Geração<strong>0</strong>
+</div>
+                    <div>Melhor aptidão<strong>—</strong>
+</div>
+                    <div>Escolhas válidas<strong>—</strong>
+</div>
                 </div>
                 <p id="phase" class="small">Rede 9–9–9 · 180 parâmetros</p>
-                <svg id="chart" viewBox="0 0 600 170" role="img" aria-label="Evolução da melhor aptidão e da aptidão média">
+                <svg id="chart" viewbox="0 0 600 170" role="img" aria-label="Evolução da melhor aptidão e da aptidão média">
                     <text x="30" y="85">O gráfico aparece após a primeira geração.</text>
                 </svg>
                 <p class="legend"><span>— Melhor aptidão</span><span>— Média da população</span></p>
@@ -92,7 +113,13 @@
                     <div class="scroll">
                         <table>
                             <caption>Indivíduos da geração atual</caption>
-                            <thead><tr><th>Posição</th><th>Aptidão</th><th>V / E / D</th><th>Inválidas</th><th>Válidas</th></tr></thead>
+                            <thead><tr>
+<th>Posição</th>
+<th>Aptidão</th>
+<th>V / E / D</th>
+<th>Inválidas</th>
+<th>Válidas</th>
+</tr></thead>
                             <tbody id="population"></tbody>
                         </table>
                     </div>
@@ -108,11 +135,15 @@
                     <label for="individual">Indivíduo</label>
                     <select id="individual"><option value="best">Melhor rede disponível</option></select>
                     <div class="fields">
-                        <label>Minimax<select id="demo-mode"><option value="dificil">Difícil</option><option value="medio">Médio</option></select></label>
-                        <label>Quem começa<select id="demo-start"><option value="yes">Rede</option><option value="no">Minimax</option></select></label>
+                        <label>Minimax<select id="demo-mode"><option value="dificil">Difícil</option>
+<option value="medio">Médio</option></select></label>
+                        <label>Quem começa<select id="demo-start"><option value="yes">Rede</option>
+<option value="no">Minimax</option></select></label>
                     </div>
-                    <div class="actions"><button id="demo" disabled>Iniciar demonstração</button><button id="next" disabled>Próxima jogada</button></div>
-                    <p id="demo-status" class="small">As jogadas aparecem no tabuleiro ao lado.</p>
+                    <div class="actions">
+<button id="demo" disabled>Iniciar demonstração</button><button id="next" disabled>Próxima jogada</button>
+</div>
+                    <p id="demo-status" class="small">As jogadas aparecem no tabuleiro acima.</p>
                     <ol id="events"></ol>
                     <pre id="outputs">Saídas da rede: —</pre>
                 </div>
@@ -130,7 +161,8 @@
                 </div>
             </details>
         </div>
-    </div>
+    </details>
+</div>
 </main>
 </body>
 </html>

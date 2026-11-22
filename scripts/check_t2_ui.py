@@ -24,6 +24,7 @@ try:
         errors=[]
         page.on('pageerror',lambda e:errors.append(str(e)))
         page.goto('http://127.0.0.1:5002')
+        page.locator('#train-panel > summary').click()
         page.locator('[name=population]').fill('6')
         page.locator('[name=generations]').fill('4')
         page.locator('#advanced summary').click()
