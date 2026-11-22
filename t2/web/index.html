@@ -1,37 +1,136 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>T2 · Jogo da Velha Neural</title><link rel="stylesheet" href="style.css"><script src="script.js" defer></script></head>
-<body><main><header><span class="tag">PUCRS · INTELIGÊNCIA ARTIFICIAL · T2</span><h1>Jogo da Velha <span>Neural</span></h1><p>Rede neural + algoritmo genético + Minimax</p></header>
-<p id="notice" role="status" aria-live="polite">Configure a população e execute a primeira geração.</p>
-<div class="layout"><section class="card"><h2>01 / Treinamento</h2>
-<form id="config"><div class="fields">
-<label>População N<input name="population" type="number" value="80" min="4" max="400" required></label>
-<label>Neurônios ocultos<input name="hidden" type="number" value="9" min="1" max="64" required></label>
-<label>Máximo de gerações<input name="generations" type="number" value="250" min="2" max="3000" required></label>
-<label>Partidas no médio<input name="medium_games" type="number" value="24" min="2" max="200" step="2" required></label>
-<label>Indivíduos de elite<input name="elite" type="number" value="2" min="1" max="399" required></label>
-<label>Tamanho do torneio<input name="tournament" type="number" value="2" min="2" max="400" required></label>
-<label>Taxa de mutação<input name="mutation" type="number" value="0.08" min="0" max="1" step="0.01" required></label>
-<label>Intensidade (σ)<input name="sigma" type="number" value="0.20" min="0.001" max="1" step="0.001" required></label>
-<label>BLX-α<input name="alpha" type="number" value="0.5" min="0" max="1" step="0.1" required></label>
-<label>Gerações sem melhora<input name="patience" type="number" value="60" min="2" max="3000" required></label>
-<label>Semente<input name="seed" type="number" value="42" min="0" max="2147483647" required></label>
-</div><button type="submit" id="init">Criar população</button></form>
-<div class="actions"><button id="step" disabled>Uma geração</button><button id="run" disabled>Treinar automaticamente</button><button id="pause" disabled>Pausar</button></div>
-<p class="small">Primeiros 40%: médio. Depois: médio + duas partidas no difícil, alternando quem começa. O treino automático pausa ao terminar a geração atual.</p>
-<details><summary>Rede, aptidão e critérios</summary><p>MLP 9–H–9: tanh na camada oculta, saída linear e bias nas duas camadas. Inicialização e limites: [−1, 1]. Nenhum backpropagation.</p><p>Aptidão = (3 × vitórias + empates − 3 × derrotas − 2 × escolhas inválidas) / partidas.</p><p>Uma escolha ocupada recebe −2. Para continuar a partida, utiliza-se a saída válida mais alta. Esse ajuste fica registrado e não conta como escolha válida da rede.</p><p>Parada por limite de gerações ou estagnação na segunda fase. Convergência significa estabilidade no conjunto de treino, não domínio do jogo.</p></details>
-</section>
-<div><section class="card"><h2>02 / Evolução da população</h2><div id="metrics" class="metrics"><div>Geração<strong>0</strong></div><div>Melhor aptidão<strong>—</strong></div><div>Escolhas válidas<strong>—</strong></div></div>
-<p id="phase">Rede 9–9–9 · 180 parâmetros, incluindo bias</p>
-<svg id="chart" viewBox="0 0 600 170" role="img" aria-label="Evolução da melhor aptidão e da aptidão média"><text x="30" y="85">Execute uma geração para iniciar o gráfico.</text></svg><p class="small"><span class="purple">● Melhor aptidão</span> · <span class="gray">● Aptidão média</span> · Escala vertical dinâmica</p>
-<div class="scroll"><table><caption>Indivíduos da geração atual, ordenados por aptidão</caption><thead><tr><th>Posição</th><th>Aptidão</th><th>V / E / D</th><th>Inválidas</th><th>Válidas</th></tr></thead><tbody id="population"></tbody></table></div>
-<div class="actions"><button id="evaluate" disabled>Avaliar em partidas de teste</button><button id="export" disabled>Salvar rede</button><button id="load">Carregar rede</button><input id="file" type="file" accept=".json" hidden></div><div id="evaluation"></div>
-<p class="small">Acurácia de decisões = escolhas originais que pertencem ao conjunto de jogadas ótimas do Minimax / decisões da rede. Escolhas ocupadas contam como erro. Vitória e empate são apresentados separadamente.</p>
-</section>
-<section class="card"><h2>03 / Jogar e inspecionar</h2><div class="play-grid"><div><div class="fields">
-<label>Adversário<select id="mode"><option value="dificil">Minimax difícil</option><option value="medio">Minimax médio</option><option value="rede">Rede treinada</option></select></label>
-<label>Quem começa<select id="starter"><option value="human">Você (X)</option><option value="computer">Computador (X)</option></select></label></div>
-<button id="new">Nova partida</button><p id="game-status" role="status" aria-live="polite">Sua vez · X</p><div id="board" class="board" role="group" aria-label="Tabuleiro do jogo da velha"></div>
-<p id="human-metrics" class="small">Decisões da rede contra você: 0</p></div>
-<div><h3>Partida de demonstração</h3><label>Indivíduo<select id="individual"><option value="best">Melhor rede disponível</option></select></label><div class="fields"><label>Minimax<select id="demo-mode"><option value="dificil">Difícil</option><option value="medio">Médio</option></select></label><label>Quem começa<select id="demo-start"><option value="yes">Rede</option><option value="no">Minimax</option></select></label></div>
-<div class="actions"><button id="demo" disabled>Preparar partida</button><button id="next" disabled>Próxima jogada</button></div><p id="demo-status">Inspecione cada jogada, a escolha original e sua recompensa.</p><pre id="outputs">Saídas da rede aparecerão aqui.</pre><ol id="events"></ol></div></div></section></div></div>
-<footer>O treino ocorre nesta sessão do servidor. Salve o arquivo JSON para guardar a rede e o histórico.</footer></main></body></html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jogo da velha — T2</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+<main>
+    <header>
+        <h1>Jogo da velha</h1>
+        <span>T2 · Inteligência Artificial</span>
+    </header>
+
+    <p id="notice" role="status" aria-live="polite">Escolha um adversário para jogar ou prepare o treino da rede.</p>
+
+    <div class="layout">
+        <section class="game" aria-labelledby="play-title">
+            <h2 id="play-title">Jogar</h2>
+            <label for="mode">Adversário</label>
+            <select id="mode">
+                <option value="dificil">Minimax difícil</option>
+                <option value="medio">Minimax médio</option>
+                <option value="rede">Rede treinada</option>
+            </select>
+            <label for="starter">Quem começa</label>
+            <select id="starter">
+                <option value="human">Você (X)</option>
+                <option value="computer">Computador (X)</option>
+            </select>
+
+            <p id="game-status" role="status" aria-live="polite">Sua vez · X</p>
+            <div id="board" class="board" role="group" aria-label="Tabuleiro do jogo da velha"></div>
+            <button id="new" class="new-game">Nova partida</button>
+            <p id="human-metrics" class="small">Acurácia da rede nesta sessão: —</p>
+
+            <div class="actions file-actions">
+                <button id="load">Carregar rede</button>
+                <button id="export" disabled>Salvar rede</button>
+                <input id="file" type="file" accept=".json" hidden>
+            </div>
+        </section>
+
+        <div class="training">
+            <section aria-labelledby="train-title">
+                <h2 id="train-title">Treinar a rede</h2>
+                <form id="config">
+                    <div class="fields">
+                        <label>População<input name="population" type="number" value="80" min="4" max="400" required></label>
+                        <label>Limite de gerações<input name="generations" type="number" value="250" min="2" max="3000" required></label>
+                    </div>
+                    <details id="advanced">
+                        <summary>Configurações avançadas</summary>
+                        <div class="fields details-content">
+                            <label>Neurônios ocultos<input name="hidden" type="number" value="9" min="1" max="64" required></label>
+                            <label>Partidas no médio<input name="medium_games" type="number" value="24" min="2" max="200" step="2" required></label>
+                            <label>Indivíduos de elite<input name="elite" type="number" value="2" min="1" max="399" required></label>
+                            <label>Tamanho do torneio<input name="tournament" type="number" value="2" min="2" max="400" required></label>
+                            <label>Taxa de mutação<input name="mutation" type="number" value="0.08" min="0" max="1" step="0.01" required></label>
+                            <label>Intensidade da mutação (σ)<input name="sigma" type="number" value="0.20" min="0.001" max="1" step="0.001" required></label>
+                            <label>Cruzamento BLX-α<input name="alpha" type="number" value="0.5" min="0" max="1" step="0.1" required></label>
+                            <label>Gerações sem melhora<input name="patience" type="number" value="60" min="2" max="3000" required></label>
+                            <label>Semente<input name="seed" type="number" value="42" min="0" max="2147483647" required></label>
+                        </div>
+                    </details>
+                    <div class="actions">
+                        <button type="submit" id="init">Preparar treino</button>
+                        <button type="button" id="run" class="primary" disabled>Treinar</button>
+                        <button type="button" id="step" disabled>Uma geração</button>
+                        <button type="button" id="pause" disabled>Pausar</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="results" aria-labelledby="results-title">
+                <h2 id="results-title">Evolução</h2>
+                <div id="metrics" class="metrics">
+                    <div>Geração<strong>0</strong></div>
+                    <div>Melhor aptidão<strong>—</strong></div>
+                    <div>Escolhas válidas<strong>—</strong></div>
+                </div>
+                <p id="phase" class="small">Rede 9–9–9 · 180 parâmetros</p>
+                <svg id="chart" viewBox="0 0 600 170" role="img" aria-label="Evolução da melhor aptidão e da aptidão média">
+                    <text x="30" y="85">O gráfico aparece após a primeira geração.</text>
+                </svg>
+                <p class="legend"><span>— Melhor aptidão</span><span>— Média da população</span></p>
+
+                <details id="population-details">
+                    <summary>Ver população</summary>
+                    <div class="scroll">
+                        <table>
+                            <caption>Indivíduos da geração atual</caption>
+                            <thead><tr><th>Posição</th><th>Aptidão</th><th>V / E / D</th><th>Inválidas</th><th>Válidas</th></tr></thead>
+                            <tbody id="population"></tbody>
+                        </table>
+                    </div>
+                </details>
+
+                <div class="actions"><button id="evaluate" disabled>Avaliar rede</button></div>
+                <div id="evaluation" aria-live="polite"></div>
+            </section>
+
+            <details id="demo-details">
+                <summary>Ver partida de treino passo a passo</summary>
+                <div class="details-content">
+                    <label for="individual">Indivíduo</label>
+                    <select id="individual"><option value="best">Melhor rede disponível</option></select>
+                    <div class="fields">
+                        <label>Minimax<select id="demo-mode"><option value="dificil">Difícil</option><option value="medio">Médio</option></select></label>
+                        <label>Quem começa<select id="demo-start"><option value="yes">Rede</option><option value="no">Minimax</option></select></label>
+                    </div>
+                    <div class="actions"><button id="demo" disabled>Iniciar demonstração</button><button id="next" disabled>Próxima jogada</button></div>
+                    <p id="demo-status" class="small">As jogadas aparecem no tabuleiro ao lado.</p>
+                    <ol id="events"></ol>
+                    <pre id="outputs">Saídas da rede: —</pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>Regras do treinamento e das métricas</summary>
+                <div class="details-content small">
+                    <p>Vitória: +3. Empate: +1. Derrota: −3. Casa ocupada: −2. A aptidão é a soma desses valores dividida pelo número de partidas.</p>
+                    <p>Se a rede escolher uma casa ocupada, o erro é registrado e a próxima saída válida permite continuar a partida.</p>
+                    <p>O treino começa no médio. Após 40% das gerações, inclui o difícil, alternando quem começa. Para por limite de gerações ou falta de melhora na segunda fase.</p>
+                    <p>Acurácia: escolhas originais que o Minimax considera ótimas, divididas pelas decisões da rede. Uma casa ocupada conta como erro.</p>
+                    <p>Escolhas válidas: proporção das escolhas originais em casas livres. Os testes usam 100 partidas no médio e duas no difícil, fora do treino.</p>
+                    <p>Rede com propagação direta. Os pesos são ajustados apenas pelo algoritmo genético.</p>
+                </div>
+            </details>
+        </div>
+    </div>
+</main>
+</body>
+</html>
